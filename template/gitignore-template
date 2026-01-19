@@ -1,0 +1,91 @@
+#-------------------------------
+######## Kirby CMS files
+#-------------------------------
+
+# System files
+# ------------
+
+Icon
+.DS_Store
+
+# Temporary files
+# ---------------
+
+/cms/media/*
+!/cms/media/index.html
+
+# Lock files
+# ---------------
+
+.lock
+
+# Editors
+# (sensitive workspace files)
+# ---------------------------
+*.sublime-workspace
+.vscode
+.idea
+
+# -------------SECURITY-------------
+# NEVER publish these files via Git!
+# -------------SECURITY-------------
+
+# Cache Files
+# ---------------
+
+/cms/site/cache/*
+!/cms/site/cache/index.html
+
+# Accounts
+# ---------------
+
+/cms/site/accounts/*
+!/cms/site/accounts/index.html
+
+# Sessions
+# ---------------
+
+/cms/site/sessions/*
+!/cms/site/sessions/index.html
+
+# License
+# ---------------
+
+/cms/site/config/.license
+
+
+#-------------------------------
+######## Astro FE
+#-------------------------------
+
+# build output
+/frontend/dist/
+
+# generated types
+/frontend/.astro/
+
+# dependencies
+/frontend/node_modules/
+
+# logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+
+# environment variables
+.env
+
+# ignore everything in the root directory except the /frontend, /cms folder and .htaccess, .git and .editorconfig (don't submit static builds)
+/*
+!/frontend/
+!/cms/
+!/.gitignore
+!/.editorconfig
+!/.htaccess
+!/README.md
+!/BUGS.md
+!/FEATURES.md
+!/docs/
+/frontend/logs/*
+!/frontend/logs/logs.txt
