@@ -1,0 +1,142 @@
+---
+import { HTMLHelper } from "../../../helpers/HTMLHelper";
+import type { BlogContent } from "../../../types/fields/blog-fields";
+import Headline from "../../atoms/Headline.astro";
+import QuoteComponent from "../../atoms/QuoteComponent.astro";
+import Image from "../../atoms/Image.astro";
+import { buildYouTubeEmbedURL } from "../../../utils/URLUtils";
+import MarkdownComponent from "../markdown-component/MarkdownComponent.astro";
+import Gallery from "../gallery/Gallery.astro";
+
+type Props = {
+    blocks: BlogContent;
+};
+
+const { blocks } = Astro.props;
+---
+
+<div>
+    {
+        blocks.map((block) => {
+            switch (block.type) {
+                case "text":
+                    return (
+                        <div class="blog-text-block">
+                            <div
+                                id={block.id}
+                                set:html={HTMLHelper.escapeXSSHtml(
+                                    block.text.value,
+                                )}
+                            />
+                        </div>
+                    );
+                case "heading":
+                    return (
+                        <div class="blog-heading-block mb-4">
+                            <Headline
+                                size={block.level.value}
+                                id={block.id}
+                                text={block.text.value}
+                            />
+                        </div>
+                    );
+                case "quote":
+                    return (
+                        <div class="blog-quote-block">
+                            <QuoteComponent
+                                quote={block.quoteText.value}
+                                source={block.quoteCitation.value}
+                            />
+                        </div>
+                    );
+                case "image":
+                    return (
+                        <div class="blog-image-block mb-5">
+                            <Image
+                                {...block.image}
+                                lazyLoad={true}
+                                blurry={true}
+                                class="mb-1 rounded"
+                            />
+                            <figcaption class="text-center text-muted">
+                                {block.caption.value}
+                            </figcaption>
+                        </div>
+                    );
+                case "line":
+                    return (
+                        <div class="blog-line-block my-4">
+                            <hr />
+                        </div>
+                    );
+                case "list":
+                    return (
+                        <div
+                            set:html={HTMLHelper.escapeXSSHtml(
+                                block.list.value,
+                            )}
+                            class="blog-list-block my-4"
+                        />
+                    );
+                case "video":
+                    if (!block.isExternal) {
+                        return (
+                            <div class="blog-video-block mb-5">
+                                <video
+                                    src={block.videoUrl}
+                                    controls={block.controls}
+                                    loop={block.loop}
+                                    muted={block.muted}
+                                    poster={block.poster}
+                                    preload={block.preload}
+                                    class="w-100 rounded"
+                                    height="500"
+                                />
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div class="blog-video-block mb-5">
+                                <iframe
+                                    width="100%"
+                                    height="500"
+                                    src={buildYouTubeEmbedURL(
+                                        block.videoUrl.value,
+                                    )}
+                                    class="rounded"
+                                />
+                            </div>
+                        );
+                    }
+                case "code":
+                    return (
+                        <div class="blog-code-block mb-3">
+                            <pre class="d-flex">
+                                <code>{block.code.value}</code>
+                            </pre>
+                        </div>
+                    );
+                case "markdown":
+                    return (
+                        <div class="blog-markdown-block mb-3">
+                            <MarkdownComponent content={block.markdown.value} />
+                        </div>
+                    );
+                case "gallery":
+                    return (
+                        <div class="blog-gallery-block mb-3">
+                            <Gallery
+                                images={block.images}
+                                caption={block.caption.value}
+                                ratio={block.ratio.value}
+                                crop={block.crop}
+                            />
+                        </div>
+                    );
+
+                default:
+                    return null;
+            }
+        })
+    }
+</div>

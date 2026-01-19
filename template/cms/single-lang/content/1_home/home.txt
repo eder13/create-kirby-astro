@@ -1,0 +1,33 @@
+Title: Home
+
+----
+
+Showcase-headline: Welcome
+
+----
+
+Showcase-sub-headline: Hi. This is me John Doe. On this page I write and ramble about my life and things I experienced. Feel free to browse my blog!
+
+----
+
+Showcase-images:
+
+- person-5956897_1920.jpg
+- monk-6113501_1920.png
+- silhouette-4332215_1920.jpg
+
+----
+
+Meta-description: Homepage
+
+----
+
+Meta-keywords: Homepage, Blog, John Doe, Blogging, Life, Stars, Universe
+
+----
+
+Meta-robots: index, follow
+
+----
+
+Showcase-image: - person-5956897_1920.jpg

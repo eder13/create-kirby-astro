@@ -1,0 +1,49 @@
+:root {
+    --navbar-height-desktop: 50px;
+    --navbar-height-desktop-text: 180px;
+    --navbar-height-mobile: 90px;
+    --navbar-height-mobile-text: 50px;
+    --navbar-height-small: 60px;
+    --navbar-height-desktop-current: 50px;
+    --navbar-height-mobile-current: 90px;
+
+    --backdrop-filter: blur(6px);
+
+    --fz-micro: 12px;
+    --fz-smallest: 14px;
+    --fz-small: 16px;
+    --fz-normal: 18px;
+    --fz-normal-bigger: 20px;
+    --fz-large: 24px;
+    --fz-largest: 32px;
+    --fz-big: 42px;
+    --fz-biggest: 48px;
+    --fz-small-ultra-big: 54px;
+    --fz-ultra-big: 60px;
+    --fz-ultra-ultra-big: 70px;
+
+    --primary-color: #f4f4f4;
+    --primary-color_rgb: 244, 244, 244;
+    --secondary-color: #080808;
+    --secondary-color_rgb: 8, 8, 8;
+    --dark-color: #333;
+    --dark-color_rgb: 55, 55, 55;
+    --light-color: #fff;
+    --light-color_rgb: 255, 255, 255;
+
+    --grayscale-9: #f9f9f9;
+    --grayscale-8: #f8f8f8;
+    --grayscale-7: #f7f7f7;
+    --grayscale-6: #f6f7f6;
+    --grayscale-4: #f4f4f4;
+    --grayscale-3: #f3f3f3;
+    --grayscale-2: #f2f2f2;
+    --grayscale-1: #f1f1f1;
+
+    --XS: 0;
+    --SM: 576px;
+    --MD: 768px;
+    --LG: 992px;
+    --XL: 1200px;
+    --XXL: 1400px;
+}

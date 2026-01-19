@@ -1,0 +1,106 @@
+---
+import type { DropdownProps } from "../../types/dropdown";
+import Link from "./Link.astro";
+
+export type Props = DropdownProps & {
+    class?: string;
+};
+
+const translation = {
+    en: {
+        all: 'All',
+    },
+    it: {
+        all: 'Tutti',
+    },
+    fr: {
+        all: 'Tous',
+    },
+    de: {
+        all: 'Alle',
+    },
+    es: {
+        all: 'Todos',
+    }
+}
+
+const {
+    active,
+    url,
+    title,
+    class: className,
+    id,
+    subpages,
+    onclick,
+} = Astro.props;
+---
+
+<li class="nav-item dropdown">
+    <Link
+        class:list={[
+            active && "active",
+            "dropdown-toggle",
+            Boolean(className) && className,
+        ]}
+        url={url}
+        id={id}
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        linkText={title.value}
+    />
+    <ul class="dropdown-menu border-0 ps-lg-0 ps-3" aria-labelledby={id}>
+        {
+            subpages?.map((subpage, index) => {
+                return (
+                    <>
+                        {index === 0 && (
+                            <li>
+                                <Link
+                                    class:list={[
+                                        "dropdown-item nav-link",
+                                        active &&
+                                            !subpages?.some(
+                                                (entry) => entry.active,
+                                            ) &&
+                                            "active",
+                                    ]}
+                                    url={url}
+                                    linkText={`${translation['{{lang}}'].all} ${title.value}`}
+                                    onclick={onclick}
+                                />
+                            </li>
+                        )}
+                        <li>
+                            <Link
+                                url={subpage.url}
+                                linkText={subpage.title.value}
+                                class:list={[
+                                    "dropdown-item nav-link",
+                                    subpage.active && "active",
+                                ]}
+                            />
+                        </li>
+                    </>
+                );
+            })
+        }
+    </ul>
+</li>
+
+<style>
+    .active {
+        text-decoration: underline solid var(--secondary-color);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+        text-decoration-skip-ink: none;
+    }
+
+    .dropdown-item.active {
+        text-decoration: underline solid var(--secondary-color);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+        text-decoration-skip-ink: none;
+        background-color: var(--grayscale-1);
+    }
+</style>

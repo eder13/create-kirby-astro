@@ -1,0 +1,94 @@
+---
+import Card from "../components/molecules/card/Card.astro";
+import Footer from "../components/molecules/footer/Footer.astro";
+import Navbar from "../components/molecules/navbar/Navbar.astro";
+import Container from "../components/structure/Container.astro";
+import TextComponent from "../components/molecules/text-component/TextComponent.astro";
+import EnvironmentHelper from "../helpers/EnvironmentHelper";
+import Layout from "../layouts/Layout.astro";
+import { Page } from "../types/pages";
+import type { BlogsResponse } from "../types/responses/blogs";
+import { getSiteData } from "../utils/DataFetchingUtils";
+
+const translation = {
+    en: {
+        readMore: 'Read More',
+    },
+    it: {
+        readMore: 'Leggi di più',
+    },
+    fr: {
+        readMore: 'Lire la suite',
+    },
+    de: {
+        readMore: 'Lies mehr',
+    },
+    es: {
+        readMore: 'Leer más',
+    }
+}
+
+const { data, isError } = await getSiteData<BlogsResponse>(
+    `${EnvironmentHelper.getFetchBaseURL()}/${Page.BLOGS}`,
+);
+const currentFullUrl = `${EnvironmentHelper.getRootDomainURL()}/${Page.BLOGS}`;
+---
+
+<Layout
+    isFetchPageError={isError}
+    seoMeta={{
+        author: data?.site.footer.contact_name.value,
+        description: data?.page.meta_fields.meta_description.value,
+        keywords: data?.page.meta_fields.meta_keywords.value,
+        robots: data?.page.meta_fields.meta_robots.value,
+        currentFullURL: new URL(currentFullUrl),
+        country: data?.site.site_data.country?.value,
+    }}
+    setMarginNavbar={true}
+    siteData={data?.site?.site_data}
+>
+    {
+        data && (
+            <main>
+                <Navbar logo={data.site.logo} headerData={data.header} />
+                <Container>
+                    <TextComponent
+                        headline={
+                            data.page.blogs_fields.blogs_title.value ?? ""
+                        }
+                        text={data.page.blogs_fields.blogs_subtitle.value ?? ""}
+                        class="mb-5"
+                    />
+
+                    <div class="row gy-5">
+                        {data.page.blogs_fields.blogs.map((blog) => (
+                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                <Card
+                                    className="card-custom-style"
+                                    title={blog.blog_title.value ?? ""}
+                                    img={blog.blog_title_image}
+                                    imgStyle={{ maxHeight: "160px" }}
+                                    text={blog.blog_subtitle.value ?? ""}
+                                    url={blog.blog_url ?? ""}
+                                    linkText={translation['{{lang}}'].readMore ?? ""}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </Container>
+                <Footer {...data.site.footer} />
+            </main>
+        )
+    }
+</Layout>
+
+<style is:global>
+    .card-custom-style .card-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 48px;
+    }
+</style>

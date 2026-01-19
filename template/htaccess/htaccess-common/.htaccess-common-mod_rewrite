@@ -1,0 +1,19 @@
+### BEGIN KIRBY ASTRO ###
+
+# serve cms at sub domain level
+RewriteBase /cms
+
+# redirect /sitemap or /sitemap/ to /sitemap.xml (permanent)
+RewriteRule ^sitemap/?$ /sitemap.xml [R=301,L]
+
+# serve /sitemap.xml internally from /cms/sitemap.xml (no redirect)
+RewriteRule ^sitemap\.xml$ /cms/sitemap.xml [L]
+
+# serve /robots.txt internally from /cms/robots.txt (no redirect)
+RewriteRule ^robots\.txt$ /cms/robots.txt [L]
+
+# block frontend and tmp frontend build folder from accessing
+RewriteRule ^frontend/ - [F]
+RewriteRule ^tmp/ - [F]
+
+### END KIRBY ASTRO ###

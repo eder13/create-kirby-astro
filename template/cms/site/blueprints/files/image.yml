@@ -1,0 +1,21 @@
+title: Image
+
+accept:
+  type: image
+
+columns:
+  - width: 1/1
+    sections:
+      meta:
+        type: fields
+        fields:
+          alt:
+            label: Alternative Text
+            type: text
+            help: Lasse dieses Feld leer um den alternativen Text automatisch gesetzt zu bekommen
+            width: 1/2
+          link:
+            label: Link
+            type: url
+            help: Wenn dieses Feld leer ist dann wird kein Link auf dem Bild gesetzt
+            width: 1/2

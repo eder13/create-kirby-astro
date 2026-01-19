@@ -1,0 +1,9 @@
+### BEGIN KIRBY ASTRO ###
+
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^({{langs}}|/cms/?)) [NC]
+RewriteRule ^(.*)$ /{{defaultLang}}/$1 [R=302,L]
+
+### END KIRBY ASTRO ###

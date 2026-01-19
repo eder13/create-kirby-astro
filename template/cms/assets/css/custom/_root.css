@@ -1,0 +1,15 @@
+/**
+ * Global CSS for Kirby and Astro.
+ * All CSS files that are referenced here will be available both in Astro and Kirby.
+ * (e.g. CSS variables etc.).
+ */
+
+/* Custom Global CSS */
+@import url("./variables.css");
+@import url("./loader.css");
+@import url("./fonts.css");
+
+/* Minified Vendor CSS */
+@import url("./../vendor/bootstrap/bootstrap.min.css");
+@import url("./../vendor/normalize/normalize.css");
+@import url("./../vendor/font-awesome/5.13.1/css/all.min.css");

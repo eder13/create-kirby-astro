@@ -1,0 +1,21 @@
+Title: Blogs
+
+----
+
+Blogs-title: Around the world
+
+----
+
+Blogs-subtitle: In 90 ways
+
+----
+
+Meta-description: My Blog Overview Page
+
+----
+
+Meta-keywords: Blog Overview, Blogs Overview Page, Blog Page
+
+----
+
+Meta-robots: index, follow

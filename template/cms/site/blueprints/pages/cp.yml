@@ -1,0 +1,8 @@
+title: Content Pages
+
+tabs:
+  content_pages:
+    label: Content Pages
+    width: 1
+    sections:
+      content_pages: sections/cp

@@ -1,0 +1,16 @@
+title: Error Page
+
+columns:
+  about:
+    label: Error Page
+    width: 1
+    sections:
+      press_fields:
+        type: fields
+        fields:
+          info:
+            label: Info
+            type: info
+            text: |
+              The error page is hardcoded and can be edited in error.astro file.
+            width: 1/1

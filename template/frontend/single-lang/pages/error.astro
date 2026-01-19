@@ -1,0 +1,65 @@
+---
+import Footer from '../components/molecules/footer/Footer.astro'
+import Navbar from '../components/molecules/navbar/Navbar.astro';
+import TextComponent from '../components/molecules/text-component/TextComponent.astro';
+import EnvironmentHelper from '../helpers/EnvironmentHelper';
+import Layout from '../layouts/Layout.astro';
+import { Page } from '../types/pages';
+import { getSiteData } from '../utils/DataFetchingUtils';
+import type { HomeResponse } from '../types/responses/home';
+
+const translations = {
+    en: {
+        "errorPageTitle": "Error",
+        "errorPageText": "An error occurred.",
+        "buttonBackToHomepageText": "Back to Home"
+    },
+    de: {
+        "errorPageTitle": "Fehler",
+        "errorPageText": "Ein Fehler ist aufgetreten.",
+        "buttonBackToHomepageText": "Zurück zur Startseite"
+    },
+    es: {
+        "errorPageTitle": "Error",
+        "errorPageText": "Ocurrió un error.",
+        "buttonBackToHomepageText": "Volver a la página de inicio"
+    },
+    it: {
+        "errorPageTitle": "Errore",
+        "errorPageText": "Si è verificato un errore.",
+        "buttonBackToHomepageText": "Torna alla home"
+    },
+    fr: {
+        "errorPageTitle": "Erreur",
+        "errorPageText": "Une erreur s'est produite.",
+        "buttonBackToHomepageText": "Retour à l'accueil"
+    }
+};
+
+const { data: json, isError } = await getSiteData<HomeResponse>(`${EnvironmentHelper.getFetchBaseURL()}${Page.HOME}`);
+
+const siteData = json ? 
+    { ...json.site.site_data, page: { value: 'Error' }  } 
+    : null;
+
+---
+
+<Layout isFetchPageError={false} seoMeta={{ robots: "noindex, nofollow" }} siteData={siteData} setMarginNavbar={true}>
+    <main>
+        {isError ?
+            <div class="container-md py-3">
+                <h1>Error 404</h1>
+                <br />
+                <a href={`/`}>Back to Home</a>
+            </div>
+        : <Navbar logo={json.site.logo} headerData={json.header} />
+            <section id={'error'}>
+                <TextComponent fontSize="bigger" dangerouslySetText={true} headline={translations['{{lang}}'].errorPageTitle} headlineSize="h1" text={translations['{{lang}}'].errorPageText}  />
+                <div class="d-flex justify-content-center align-items-center">
+                    <a class="btn btn-link" href={`/`}>{translations['{{lang}}'].buttonBackToHomepageText}</a>
+                </div>
+            </section>
+            <Footer {...json.site.footer} />
+        }
+    </main>
+</Layout>

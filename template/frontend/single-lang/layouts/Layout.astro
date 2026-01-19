@@ -1,0 +1,66 @@
+---
+import type { Meta } from "../types/seo/meta";
+import type { SiteMetaData } from "../types/responses/default-response";
+import Favicon from "./Favicon.astro";
+import Fonts from "./Fonts.astro";
+import MetaComponent from "./Meta.astro";
+import Global from "./Global.astro";
+
+interface Props {
+    siteData: SiteMetaData | null | undefined;
+    seoMeta: Omit<Meta, "title">;
+    setMarginNavbar?: boolean;
+    isFetchPageError?: boolean;
+}
+
+const {
+    siteData,
+    setMarginNavbar: skipNavbarMargin,
+    seoMeta,
+    isFetchPageError,
+} = Astro.props;
+
+const margin = skipNavbarMargin
+    ? "calc(var(--navbar-height-desktop) + 60px);"
+    : "0";
+
+const pageTitle = `${siteData?.website?.value ?? "Demokit Blog Astro"} | ${siteData?.page?.value ?? "Error"}`;
+---
+
+<>
+    {
+        isFetchPageError ? (
+            <meta
+                http-equiv="refresh"
+                content={`0;url=/error`}
+            />
+        ) : (
+            <html lang={'{{lang}}'}>
+                <head>
+                    <title>{pageTitle}</title>
+                    <MetaComponent
+                        title={pageTitle}
+                        ogMeta={{
+                            title: pageTitle,
+                            description: seoMeta.description ?? "",
+                            image: siteData?.ogImage,
+                        }}
+                        {...seoMeta}
+                    />
+                    <Favicon siteData={siteData} />
+                    <Fonts />
+                    <Global />
+                </head>
+                <body>
+                    <slot />
+                </body>
+            </html>
+        )
+    }
+</>
+
+<style is:global define:vars={{ margin }}>
+    nav ~ * {
+        padding-top: var(--margin);
+    }
+</style>

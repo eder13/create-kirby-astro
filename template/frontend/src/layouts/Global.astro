@@ -1,0 +1,98 @@
+---
+import EnvironmentHelper from "../helpers/EnvironmentHelper";
+
+const baseUrl = EnvironmentHelper.getRootDomainURL();
+---
+
+<link rel="stylesheet" href={`${baseUrl}/cms/assets/css/custom/_root.css`} />
+<script
+    type="text/javascript"
+    src={`${baseUrl}/cms/assets/js/vendor/popper/popper.min.js`}></script>
+<script
+    type="text/javascript"
+    src={`${baseUrl}/cms/assets/js/vendor/bootstrap/bootstrap.min.js`}></script>
+
+<style is:global>
+    * {
+        box-sizing: border-box;
+        font-family: "Montserrat", sans-serif, Arial, Helvetica, sans-serif;
+    }
+
+    ul li p {
+        text-align: left;
+    }
+
+    .sr-only {
+        border: 0 !important;
+        clip: rect(1px, 1px, 1px, 1px) !important;
+        -webkit-clip-path: inset(50%) !important;
+        clip-path: inset(50%) !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        position: absolute !important;
+        width: 1px !important;
+        white-space: nowrap !important;
+        display: inline;
+        color: white;
+    }
+
+    .wysiwyg p,
+    .wysiwyg ul,
+    .wysiwyg ol {
+        line-height: 1.5;
+        hyphens: auto;
+    }
+
+    .wysiwyg a {
+        color: var(--secondary-color);
+        text-decoration-thickness: 2px;
+        hyphens: auto;
+        line-height: 1.5;
+    }
+
+    .wysiwyg a:hover {
+        filter: brightness(130%);
+    }
+
+    footer a:not(.unstyled) {
+        color: var(--grayscale-4) !important;
+    }
+
+    footer a:not(.unstyled) span {
+        color: var(--grayscale-4) !important;
+        border-bottom: 2px solid var(--grayscale-4) !important;
+    }
+
+    footer .wysiwyg a:not(.unstyled) {
+        color: var(--grayscale-4) !important;
+    }
+
+    .splide__arrows {
+        display: none;
+    }
+
+    .nav-top-adjust-image main {
+        padding-top: calc(var(--navbar-height-desktop));
+    }
+
+    .nav-top-adjust-text main {
+        padding-top: calc(var(--navbar-height-desktop-text));
+    }
+
+    @media only screen and (max-width: 1199px) {
+        .nav-top-adjust-image main {
+            padding-top: var(--navbar-height-mobile);
+        }
+
+        .nav-top-adjust-text main {
+            padding-top: var(--navbar-height-mobile-text);
+        }
+    }
+
+    body {
+        background-color: var(--light-color);
+        overflow-x: hidden;
+    }
+</style>

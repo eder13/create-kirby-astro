@@ -1,0 +1,31 @@
+### BEGIN KIRBY ASTRO ###
+
+RewriteCond %{HTTP:Cookie} SELECTED_LANGUAGE_COOKIE={{lang}} [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} ^/$ [NC]
+RewriteRule ^(.*)$ /{{lang}}/ [R=302,L]
+
+RewriteCond %{HTTP:Cookie} SELECTED_LANGUAGE_COOKIE={{lang}} [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^({{langs}}|/cms/?)) [NC]
+RewriteRule ^(.*)$ /{{lang}}/$1 [R=302,L]
+
+RewriteCond %{HTTP:Accept-Language} ^{{lang}} [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} ^/$ [NC]
+RewriteRule ^(.*)$ /{{lang}}/ [R=302,L]
+
+RewriteCond %{HTTP:Accept-Language} ^{{lang}} [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^({{langs}}|/cms/?)) [NC]
+RewriteRule ^(.*)$ /{{lang}}/$1 [R=302,L]
+
+### END KIRBY ASTRO ###

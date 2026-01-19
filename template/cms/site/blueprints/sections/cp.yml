@@ -1,0 +1,11 @@
+type: pages
+label: Content Pages
+parent: kirby.page("cp")
+size: small
+layout: cards
+template: content_page
+empty: No Content Pages added yet...
+image:
+  query: page.cover.toFile
+  cover: true
+  ratio: 5/4

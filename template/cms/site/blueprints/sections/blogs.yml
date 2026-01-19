@@ -1,0 +1,11 @@
+type: pages
+label: Blogs
+parent: kirby.page("blogs")
+size: small
+layout: cards
+template: blog
+empty: No Blogs added yet...
+image:
+  query: page.cover.toFile
+  cover: true
+  ratio: 5/4

@@ -1,0 +1,6 @@
+### BEGIN KIRBY ASTRO ###
+
+Header set Access-Control-Allow-Origin "*"
+Header set Cross-Origin-Resource-Policy "cross-origin"
+
+### END KIRBY ASTRO ###

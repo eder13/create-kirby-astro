@@ -1,0 +1,162 @@
+title: Site
+
+tabs:
+  sites:
+    label: Pages
+    width: 1
+    sections:
+      pages:
+        type: pages
+        label: Pages
+        layout: cards
+  essential:
+    label: Essential Metadata
+    width: 1
+    sections:
+      essential_fields:
+        type: fields
+        fields:
+          country: 
+            label: Country
+            type: text
+            width: 1/1
+          logo:
+            multiple: false
+            label: Logo
+            type: files
+            width: 1/1
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          info_1:
+            label: Info Favicon and Web Manifest Generation
+            type: info
+            text: You can use a tool like https://realfavicongenerator.net/
+            width: 1/1
+          favicon:
+            multiple: false
+            label: Favicon (ico File)
+            type: files
+            width: 1/2
+            uploads: favicon
+            query: site.images.template("favicon")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          favicon_apple_touch_icon:
+            multiple: false
+            label: Apple Touch Icon
+            type: files
+            width: 1/2
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          favicon_48x_48x:
+            multiple: false
+            label: Favicon in 48x48 format
+            type: files
+            width: 1/2
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          favicon_svg:
+            multiple: false
+            label: Favicon as svg+xml format
+            type: files
+            width: 1/2
+          web_app_manifest_144x144:
+            multiple: false
+            label: Web App Manifest 144x144 Icon
+            type: files
+            width: 1/2
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          web_app_manifest_192x192:
+            multiple: false
+            label: Web App Manifest 192x192 Icon
+            type: files
+            width: 1/2
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          web_app_manifest_512x512:
+            multiple: false
+            label: Web App Manifest 512x512 Icon
+            type: files
+            width: 1/2
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+          info_2:
+            label: Info Web Manifest
+            type: info
+            text: The web manifest is a .json file. It is important that the 192x192 and 512x512 images referenced also exist and the correct path is specified. To display the path for an image, click on the image and then on "url" to see the full path. Use this path for the 192x192 and 512x512 images.
+            width: 1/1
+          web_app_manifest_json:
+            label: Manifest, JSON Format
+            type: textarea
+            buttons: false
+            width: 1/1
+          ogImage:
+            help: This image should have a resolution of 1200x630.
+            label: Open Graph image (og Meta image)
+            type: files
+            width: 1/1
+            uploads: image
+            query: site.images.template("image")
+            image:
+              cover: true
+              ratio: 1/1
+              back: black
+
+  footer:
+    label: Footer
+    width: 1
+    sections:
+      footer_fields:
+        type: fields
+        fields:
+          contact_name:
+            label: Your Name
+            type: text
+            width: 1/4
+          contact_address:
+            label: Your Address
+            type: text
+            width: 1/4
+          contact_country:
+            label: Your Country
+            type: text
+            width: 1/4
+          contact_instagram:
+            label: Social Media Instagram Link
+            type: url
+            width: 1/2
+          contact_facebook:
+            label: Social Media Facebook Link
+            type: url
+            width: 1/2
+          contact_x:
+            label: Social Media X Link
+            type: url
+            width: 1/2

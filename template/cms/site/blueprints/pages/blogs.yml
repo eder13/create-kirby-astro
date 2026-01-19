@@ -1,0 +1,45 @@
+title: Blog Pages
+
+tabs:
+  blogs:
+    label: Blogs
+    width: 1
+    sections:
+      blogs_fields:
+        type: fields
+        fields:
+          blogs_title:
+            label: Blogs Titel
+            type: text
+          blogs_subtitle:
+            label: Blogs Untertitel
+            type: text
+      blogs: sections/blogs
+  meta:
+    label: Meta Data
+    width: 1
+    sections:
+      meta_fields:
+        type: fields
+        fields:
+          meta_description:
+            label: Meta Description
+            type: text
+            width: 1/1
+          meta_keywords:
+            label: Meta Keywords
+            type: textarea
+            width: 1/1
+          meta_robots:
+            label: Meta Robots
+            type: select
+            options:
+              - value: "index, follow"
+                text: "index, follow"
+              - value: "noindex, nofollow"
+                text: "noindex, nofollow"
+              - value: "index, nofollow"
+                text: "index, nofollow"
+              - value: "noindex, follow"
+                text: "noindex, follow"
+              
