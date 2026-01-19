@@ -147,6 +147,16 @@ class SetupSteps {
             cwd: `${this._projectDir}/cms`,
         });
 
+        // remove home and error folder inside content
+        fs.rmSync(`${this._projectDir}/cms/content/home`, {
+            recursive: true,
+            force: true,
+        });
+        fs.rmSync(`${this._projectDir}/cms/content/error`, {
+            recursive: true,
+            force: true,
+        });
+
         Logger.success('Kirby Dependencies installed successfully.');
     }
 }

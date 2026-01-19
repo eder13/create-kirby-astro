@@ -35,6 +35,8 @@ the following files need adjustments in order to function properly:
 
 - site/config.php
     - set languages true, add getObjectTranslations to route
+    - sitemaps language specific
+    - robots.txt disallow error paths
 - site/helpers/translation_keys
     - create that file and return data - include as needed and specified by CLI languages
 - template/cms/site/languages - create that folder languages and move all the languages i.e. de.php, en.php, etc. from multiple-lang

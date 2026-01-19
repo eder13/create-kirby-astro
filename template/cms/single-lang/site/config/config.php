@@ -65,10 +65,9 @@ return [
             'pattern' => 'robots.txt',
             'action'  => function() {
                 $base = rtrim(removeCmsFromUrl(site()->url(), true), '/');
-                $content = "User-agent: *\nDisallow: /de/error\nDisallow: /cms/\nDisallow: /frontend/\nDisallow: /tmp/\nDisallow: /_astro/\nAllow: /\n\nSitemap: " . $base . "/sitemap.xml\n";
+                $content = "User-agent: *\nDisallow: /error\nDisallow: /cms/\nDisallow: /frontend/\nDisallow: /tmp/\nDisallow: /_astro/\nAllow: /\n\nSitemap: " . $base . "/sitemap.xml\n";
                 return new Kirby\Cms\Response($content, 'text/plain');
             }
         ]
     ]
 ];
-
