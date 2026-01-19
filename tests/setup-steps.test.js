@@ -25,3 +25,19 @@ test('SetupSteps class', () => {
     expect(setupSteps._langs).toEqual(['en']);
     expect(setupSteps._locales).toEqual(['en-US']);
 });
+
+test('SetupSteps args getter and setter', () => {
+    const setupSteps = new SetupSteps();
+
+    setupSteps.args = [
+        '--name=test-project',
+        '--langs=[en]',
+        '--locales=[en-US]',
+    ];
+
+    expect(setupSteps.args).toEqual([
+        '--name=test-project',
+        '--langs=[en]',
+        '--locales=[en-US]',
+    ]);
+});

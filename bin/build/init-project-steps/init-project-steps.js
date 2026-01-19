@@ -19,9 +19,9 @@ class InitProjectSteps {
         this._projectName = projectName;
         this._langs = langs;
         this._locales = locales;
-        this._defaultLang = langs[0];
+        this._defaultLang = langs?.[0];
 
-        if (langs.length > 1) {
+        if (langs?.length > 1) {
             this._isSingleLang = false;
         }
 

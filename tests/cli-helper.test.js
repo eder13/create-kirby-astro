@@ -8,12 +8,12 @@ test('should fail if name was not provided', () => {
 
 test('should validate arguments correctly with only name provided', () => {
     const args = ['--name=test'];
-    expect(CLIHelper.hasValidArguments(args)).toBe(true);
+    expect(CLIHelper.hasValidArguments(args)).toBeTruthy();
 });
 
 test('should validate arguments correctly with all options provided', () => {
     const args = ['--name=test', '--langs=[en]', '--locales=[en-US]'];
-    expect(CLIHelper.hasValidArguments(args)).toBe(true);
+    expect(CLIHelper.hasValidArguments(args)).toBeTruthy();
 });
 
 test('should invalidate arguments with unknown option', () => {
