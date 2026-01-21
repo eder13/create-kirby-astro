@@ -1,0 +1,125 @@
+---
+import TranslationHelper from "../../../helpers/TranslationHelper";
+import type { HeaderEntry } from "../../../types/header";
+import type { Logo } from "../../../types/logo";
+import Dropdown from "../../atoms/Dropdown.astro";
+import NavItems from "../../atoms/NavItems.astro";
+import CommonConstants from '../../../constants/common';
+
+interface Props {
+    headerData: Array<HeaderEntry> | null | undefined;
+    logo: Logo;
+}
+
+const { headerData, logo } = Astro.props;
+const t = await TranslationHelper.getInstance();
+---
+
+<nav class="navbar navbar-expand-lg fixed-top bg-white">
+    <div class="container-fluid grid grid-cols-[1fr_auto_1fr] items-center">
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="logo-wrapper">
+            <a
+                class="navbar-brand logo"
+                href={`/${t.getCurrentAstroLanguage(Astro.url.pathname) ?? ""}`}
+            >
+                <img
+                    src={logo.url}
+                    width={logo.width}
+                    height={logo.height}
+                    id="logo"
+                    alt="Logo"
+                    class="logo-img"
+                />
+            </a>
+        </div>
+        <Dropdown
+            skipHeadlineInDropdown
+            class="d-lg-none"
+            id="languageDropdownMobile"
+            title={{ value: "lang" }}
+            url="#"
+            subpages={[
+                {{languageSelectorOptions}}
+            ]}
+        />
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <NavItems headerEntries={headerData} />
+            </ul>
+
+            <Dropdown
+                skipHeadlineInDropdown
+                class="d-none d-lg-block"
+                id="languageDropdownDesktop"
+                title={{ value: "Lang" }}
+                url="#"
+                subpages={t.getLanguageOptions().map(language => ({
+					active: language === t.getCurrentAstroLanguage(Astro.url.pathname),
+					title: {
+						value: language.toUpperCase()
+					},
+					url: `/${language}`,
+					onClick: `javascript:document.dispatchEvent(new CustomEvent('${CommonConstants.CUSTOM_EVENT_TRIGGER_LANGUAGE_SCRIPT}', { detail: { language: '${language}' } }));return false;`
+				}))}
+            />
+        </div>
+    </div>
+</nav>
+
+<style>
+    .logo-wrapper {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .logo .logo-img {
+        width: auto;
+        height: calc(var(--navbar-height-desktop) - 2px);
+        object-fit: contain;
+        transition: height 0.4s;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+    }
+</style>
+
+<script>
+    import Cookies from 'universal-cookie';
+    import CommonConstants from '../../../constants/common';
+
+	document.addEventListener(`${CommonConstants.CUSTOM_EVENT_TRIGGER_LANGUAGE_SCRIPT}`, (event: any) => {
+		const domain = window.location.host.replace(/www\./, '');
+
+		const currentDate = new Date();
+		const expirationDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + 1));
+		const cookies = new Cookies(undefined, { path: '/', domain: `.${domain}`, httpOnly: false, secure: import.meta.env.PROD, sameSite: 'none', expires: expirationDate });
+		const preferedLanguage = event.detail.language;
+		const currentUrlReplacedWithPreferedLanguage = `/${preferedLanguage}${window.location.pathname.replace(/^(\/de|\/en|\/es|\/fr|\/it)/, '')}`;
+
+		cookies.set(CommonConstants.SELECTED_LANGUAGE_COOKIE, preferedLanguage);
+		
+		console.log('Setting prefered language to:', preferedLanguage);
+		console.log('Redirecting to prefered language:', currentUrlReplacedWithPreferedLanguage);
+
+		window.location.href = currentUrlReplacedWithPreferedLanguage;
+	});
+</script>

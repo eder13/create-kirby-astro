@@ -1,0 +1,73 @@
+---
+import EnvironmentHelper from '../helpers/EnvironmentHelper';
+import type { SiteMetaData } from '../types/responses/default-response';
+import { isJSON } from '../utils/DataFetchingUtils';
+import path from 'path';
+import fs from 'fs';
+
+type Props = {
+    siteData: SiteMetaData | undefined | null;
+};
+
+const { siteData } = Astro.props;
+const SITE_MANIFEST_ASSETS_PATH = 'cms/assets/webmanifest';
+const SITE_MANIFEST_FILE_NAME = 'site.webmanifest';
+const baseUrl = EnvironmentHelper.getRootDomainURL();
+
+const createSiteManifest = () => {
+    console.log(
+        `Generating site.webmanifest with json data=${siteData?.manifest} ...`,
+    );
+
+    const manifest = isJSON(siteData?.manifest);
+    if (manifest) {
+        try {
+            const currentWorkingDir = path.resolve('./'); // points to $ROOT/frontend folder
+            const rootDirectory = path.join(currentWorkingDir, '../');
+            const destinationManifestFolder = path.join(
+                rootDirectory,
+                SITE_MANIFEST_ASSETS_PATH,
+            );
+
+            const siteManifestFilePath = path.join(
+                destinationManifestFolder,
+                SITE_MANIFEST_FILE_NAME,
+            );
+
+            fs.writeFileSync(
+                siteManifestFilePath,
+                JSON.stringify(manifest),
+                'utf8',
+            );
+
+            console.log(`Successfully generated ${siteManifestFilePath} ✅`);
+        } catch (e) {
+            console.error('failed to generate site.manifest file... :( ❌', e);
+        }
+    }
+};
+
+createSiteManifest();
+---
+
+<link
+    rel="icon"
+    type="image/png"
+    href={siteData?.favicon48x48?.url}
+    sizes="48x48"
+/>
+<link rel="icon" type="image/svg+xml" href={siteData?.faviconSvg?.url} />
+<link rel="shortcut icon" href={siteData?.faviconIco?.url} />
+<link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href={siteData?.appleTouchIcon?.url}
+/>
+<meta
+    name="apple-mobile-web-app-title"
+    content={`${siteData?.website?.value ?? 'Demokit Blog Astro'} | ${siteData?.page?.value}`}
+/>
+<link
+    rel="manifest"
+    href={`${baseUrl}/${SITE_MANIFEST_ASSETS_PATH}/${SITE_MANIFEST_FILE_NAME}`}
+/>

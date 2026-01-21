@@ -1,0 +1,12 @@
+---
+import { marked } from "marked";
+import { HTMLHelper } from "../../../helpers/HTMLHelper";
+
+type Props = {
+    content: string;
+};
+
+const parsed = await marked.parse(Astro.props.content);
+---
+
+<div set:html={HTMLHelper.escapeXSSHtml(parsed)} />

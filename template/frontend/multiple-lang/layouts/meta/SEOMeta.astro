@@ -1,0 +1,35 @@
+---
+import type { Meta } from '../../types/seo/meta'
+import { buildURLWithLanguage, getURLWithoutLanguage } from '../../utils/URLUtils';
+
+type Props = Omit<Meta, 'title'>;
+
+const { author, keywords, description, robots, currentLanguage, currentFullURL, canonicalUrl, supportedLanguages, ogMeta, country, locales } = Astro.props;
+
+---
+
+{author && <meta name="author" content={author} />}
+{description && <meta name="description" content={description} />}
+{keywords && <meta name="keywords" content={keywords} />}
+<meta name="robots" content={robots} />
+{country && <meta name="country" content={country} />}
+{ogMeta !== undefined && currentFullURL && 
+    <meta property="og:title" content={ogMeta.title} />
+    <meta property="og:url" content={currentFullURL} />
+    <meta property="og:description" content={ogMeta.description} />
+    <meta property="og:image" content={ogMeta.image?.url} />
+    <meta property="og:locale" content={locales?.find(locale => locale.LC_ALL.includes(currentLanguage ?? ''))?.LC_ALL} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogMeta.title} />
+    <meta name="twitter:description" content={ogMeta.description} />
+    <meta name="twitter:image" content={ogMeta.image?.url} />
+}
+{ogMeta !== undefined && locales?.filter((locale) => !locale.LC_ALL.includes(currentLanguage ?? '')).map(lang => (
+    <meta property="og:locale:alternate" content={`${lang.LC_ALL}`} />
+))}
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+{currentFullURL && supportedLanguages?.map(lang => (
+    <link rel="alternate" hreflang={lang} href={buildURLWithLanguage(lang, currentFullURL.pathname)} />
+))}
+{currentFullURL && <link rel="alternate" hreflang="x-default" href={getURLWithoutLanguage(currentFullURL)} />}

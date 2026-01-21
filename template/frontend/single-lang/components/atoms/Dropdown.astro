@@ -31,7 +31,8 @@ const {
     class: className,
     id,
     subpages,
-    onclick,
+    onClick,
+    skipHeadlineInDropdown
 } = Astro.props;
 ---
 
@@ -54,7 +55,7 @@ const {
             subpages?.map((subpage, index) => {
                 return (
                     <>
-                        {index === 0 && (
+                        {!skipHeadlineInDropdown && index === 0 && (
                             <li>
                                 <Link
                                     class:list={[
@@ -67,7 +68,7 @@ const {
                                     ]}
                                     url={url}
                                     linkText={`${translation['{{lang}}'].all} ${title.value}`}
-                                    onclick={onclick}
+                                    onclick={onClick}
                                 />
                             </li>
                         )}
@@ -79,6 +80,7 @@ const {
                                     "dropdown-item nav-link",
                                     subpage.active && "active",
                                 ]}
+                                onclick={onClick}
                             />
                         </li>
                     </>

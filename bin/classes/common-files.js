@@ -1,13 +1,13 @@
-import Logger from '../../support/logger.js';
-import fs from 'fs';
+import Logger from '../support/logger.js';
 import path from 'path';
 import {
     MOD_REWRITE_HEADERS_REGEX,
     MOD_REWRITE_REWRITE_REGEX,
-} from '../../support/common.js';
-import ContentFileHelper from '../../support/content-helper.js';
+} from '../support/common.js';
+import ContentFileHelper from '../support/content-helper.js';
+import FileTransferHelper from '../support/file-helper.js';
 
-class InitProjectSteps {
+class CommonFiles {
     _projectName = '';
     _langs = [];
     _locales = [];
@@ -25,10 +25,10 @@ class InitProjectSteps {
             this._isSingleLang = false;
         }
 
-        Logger.info('Init Project Files');
+        this._init();
     }
 
-    init() {
+    _init() {
         this._createHtaccessFile();
         this._addScriptsPackageJson();
         this._createEnvFile();
@@ -43,7 +43,7 @@ class InitProjectSteps {
             `${this._projectName}/cms/.htaccess`,
         );
 
-        if (!fs.existsSync(htAccessFile)) {
+        if (!FileTransferHelper.fileOrFolderExists(htAccessFile)) {
             Logger.error('.htaccess file not found');
             process.exit(1);
         }
@@ -58,7 +58,7 @@ class InitProjectSteps {
             // TODO with language redirects - multiple language setup
         }
 
-        fs.renameSync(
+        FileTransferHelper.renameFileOrFolder(
             htAccessFile,
             path.join(this._cwd, `${this._projectName}/.htaccess`),
         );
@@ -94,9 +94,8 @@ class InitProjectSteps {
             this._cwd,
             `template/htaccess/${htAccessPathToBeAdded}`,
         );
-        const contentToBeAddedModRewrite = fs.readFileSync(
+        const contentToBeAddedModRewrite = ContentFileHelper.readFile(
             pathContentToBeAddedModRewrite,
-            'utf-8',
         );
 
         ContentFileHelper.replaceInFile(
@@ -114,13 +113,8 @@ class InitProjectSteps {
             `${this._projectName}/frontend/package.json`,
         );
 
-        if (!fs.existsSync(packageJsonFile)) {
-            Logger.error('package.json file not found');
-            process.exit(1);
-        }
-
         const packageJson = JSON.parse(
-            fs.readFileSync(packageJsonFile, 'utf-8'),
+            ContentFileHelper.readFile(packageJsonFile),
         );
 
         packageJson.scripts = {
@@ -130,7 +124,10 @@ class InitProjectSteps {
             build: "touch deployment.lock && (astro build >> logs/$(date +'%Y-%m-%d_%H-%M-%S')_deployment.log 2>&1 || (rm -rf dist/ && touch error.build || true)) && rm -rf deployment.lock &",
         };
 
-        fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson, null, 2));
+        ContentFileHelper.writeFile(
+            packageJsonFile,
+            JSON.stringify(packageJson, null, 2),
+        );
 
         Logger.success('Successfully added scripts to package.json');
     }
@@ -142,7 +139,7 @@ class InitProjectSteps {
         const defaultContent =
             'DOMAIN="localhost"\nDEPLOYMENT_KEY="my-secret-password"\n# Add other env vars here\n';
 
-        fs.writeFileSync(envFile, defaultContent, {
+        ContentFileHelper.writeFile(envFile, defaultContent, {
             encoding: 'utf-8',
             mode: 0o600,
         });
@@ -163,7 +160,7 @@ class InitProjectSteps {
             `${this._projectName}/.gitignore`,
         );
 
-        fs.copyFileSync(gitIgnoreTemplateFile, gitignoreFile);
+        FileTransferHelper.copyFileToFile(gitIgnoreTemplateFile, gitignoreFile);
 
         Logger.success(
             'Successfully created .gitignore file and moved to root',
@@ -171,4 +168,4 @@ class InitProjectSteps {
     }
 }
 
-export default InitProjectSteps;
+export default CommonFiles;

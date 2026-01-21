@@ -1,0 +1,178 @@
+---
+import Headline from "./../../atoms/Headline.astro";
+import Text from "./../../atoms/Text.astro";
+import Container from "./../../structure/Container.astro";
+import Image from "./../../atoms/Image.astro";
+import { v4 } from "uuid";
+import type { HTMLText } from "../../../types/misc/html-text";
+import type { Image as ImageType } from "../../../types/image";
+
+type Props = {
+    headline?: string | null;
+    text?: string | null;
+    style?: string | Record<string, any>;
+    class?: string;
+    link?: {
+        text: string;
+        url: string;
+        isExternal?: boolean;
+        className?: string;
+    };
+    clickCollect?: {
+        text: HTMLText;
+    };
+    imageStyle?: string | Record<string, string | number | null | undefined>;
+    maxImageHeight?: number;
+    switchOrder?: boolean;
+    switchOrderMobileOnly?: boolean;
+    headlineSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    fontSize?:
+        | "biggest"
+        | "biggerer"
+        | "bigger"
+        | "big"
+        | "large"
+        | "normal"
+        | "small";
+    dangerouslySetDescription?: boolean;
+    dangerouslySetButtonText?: boolean;
+    additionalHeadline?: string;
+    additionalText?: string;
+    additionalAdditionalText?: string;
+    headlineStyle?: string;
+    blurryPlaceHolder?: boolean;
+    image: ImageType;
+};
+
+const {
+    headline,
+    text,
+    style,
+    link,
+    imageStyle,
+    maxImageHeight,
+    switchOrder,
+    headlineSize,
+    fontSize,
+    dangerouslySetDescription,
+    headlineStyle,
+    blurryPlaceHolder,
+    switchOrderMobileOnly,
+    class: className,
+    clickCollect,
+    image,
+} = Astro.props;
+const id = `text-image-component-${v4()}`;
+---
+
+<Container class:list={[className && className, "wrapper"]} style={style}>
+    <div class="row gy-4 gy-md-0 align-items-center">
+        <div
+            class:list={[
+                switchOrder && "order-2",
+                switchOrderMobileOnly && "order-md-0 order-2",
+            ]}
+            class="col-md-6 col-sm-12 col-xs-12 text-image--text gx-lg-5"
+        >
+            <Headline
+                style={headlineStyle}
+                fontSize={fontSize}
+                size={headlineSize}
+                text={headline ?? ""}
+            />
+            <Text
+                dangerouslySetText={dangerouslySetDescription}
+                text={text ?? ""}
+            />
+
+            {
+                !!clickCollect?.text && !!link?.text && !!link?.url && (
+                    <div>
+                        <Text
+                            class="pt-3"
+                            dangerouslySetText={true}
+                            text={clickCollect?.text ?? ""}
+                        />
+                    </div>
+                )
+            }
+        </div>
+        {
+            (
+                <div
+                    class:list={[
+                        switchOrder && "order-1",
+                        switchOrderMobileOnly && "order-md-1 order-1",
+                    ]}
+                    class="d-none d-lg-none d-md-block col-lg-0 col-md-1 col-xs-0 align-items-end d-flex justify-content-center align-items-center order-lg-0 gx-lg-5"
+                />
+            )
+        }
+        <div
+            class:list={[
+                switchOrder && "order-0",
+                switchOrderMobileOnly && "order-md-2 order-0",
+            ]}
+            class="col-lg-6 col-md-5 col-sm-12 col-xs-12 text-image--image-wrapper align-items-end d-flex justify-content-center align-items-center gy-5"
+            style={maxImageHeight ? `max-height: ${maxImageHeight}px` : ""}
+        >
+            {
+                image && (
+                    <Image
+                        lazyLoad={true}
+                        blurry={!!blurryPlaceHolder}
+                        style={
+                            maxImageHeight
+                                ? "height: 100%; width: 100%; object-fit: contain"
+                                : imageStyle
+                        }
+                        url={Astro.props.image.url}
+                        srcset={Astro.props.image.srcset}
+                        width={Astro.props.image.width}
+                        height={Astro.props.image.height}
+                        alt={Astro.props.image.alt}
+                        id={Astro.props.image.id}
+                        thumbnail={Astro.props.image.thumbnail}
+                        class="rounded"
+                    />
+                )
+            }
+        </div>
+    </div>
+</Container>
+
+<script is:inline define:vars={{ id, image, blurryPlaceHolder }}>
+    if (blurryPlaceHolder && (image?.url || image?.url)) {
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+                const fullImgElement = new Image();
+                fullImgElement.src = image?.url;
+
+                function onBgImageLoaded() {
+                    const divWithBackgroundImg = document.getElementById(id);
+                    const divWithBackgroundImgMobile = document.getElementById(
+                        `${id}-mobile`,
+                    );
+                    divWithBackgroundImg.style.setProperty(
+                        "--imgDesktop",
+                        `url("${imageDesktop?.url}")`,
+                    );
+                    divWithBackgroundImgMobile.style.setProperty(
+                        "--imgMobile",
+                        `url("${imageMobile?.url}")`,
+                    );
+                }
+
+                if (fullImgElement.complete) {
+                    onBgImageLoaded();
+                } else {
+                    fullImgElement.addEventListener("load", onBgImageLoaded, {
+                        once: true,
+                    });
+                }
+            },
+            { once: true },
+        );
+    }
+</script>

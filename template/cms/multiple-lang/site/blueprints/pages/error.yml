@@ -1,0 +1,18 @@
+title: Error Page
+
+columns:
+  about:
+    label: Error Seite
+    width: 1
+    sections:
+      press_fields:
+        type: fields
+        fields:
+          info:
+            label: Info
+            type: info
+            text: |
+              The error page can be edited using the [Translation Keys](/cms/panel/languages):
+              -  Title: error.page.title
+              -  Text: error.page.text
+            width: 1/1

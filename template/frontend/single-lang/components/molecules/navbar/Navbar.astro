@@ -1,0 +1,74 @@
+---
+import type { HeaderEntry } from "../../../types/header";
+import type { Logo } from "../../../types/logo";
+import NavItems from "../../atoms/NavItems.astro";
+
+
+interface Props {
+    headerData: Array<HeaderEntry> | null | undefined;
+    logo: Logo;
+}
+
+const { headerData, logo } = Astro.props;
+---
+
+<nav class="navbar navbar-expand-lg fixed-top bg-white">
+    <div class="container-fluid grid grid-cols-[1fr_auto_1fr] items-center">
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="logo-wrapper">
+            <a
+                class="navbar-brand logo"
+                href="/"
+            >
+                <img
+                    src={logo.url}
+                    width={logo.width}
+                    height={logo.height}
+                    id="logo"
+                    alt="Logo"
+                    class="logo-img"
+                />
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <NavItems headerEntries={headerData} />
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .logo-wrapper {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .logo .logo-img {
+        width: auto;
+        height: calc(var(--navbar-height-desktop) - 2px);
+        object-fit: contain;
+        transition: height 0.4s;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+    }
+</style>

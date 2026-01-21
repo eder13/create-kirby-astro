@@ -13,6 +13,10 @@ class FileTransferHelper {
         }
     }
 
+    static copyFileToFile(src, dest) {
+        fs.copyFileSync(src, dest);
+    }
+
     static removeFileOrFolder(src, isFolder = false) {
         if (fs.existsSync(src)) {
             if (isFolder) {
@@ -20,6 +24,22 @@ class FileTransferHelper {
             } else {
                 fs.unlinkSync(src);
             }
+        }
+    }
+
+    static fileOrFolderExists(filePath) {
+        return fs.existsSync(filePath);
+    }
+
+    static renameFileOrFolder(oldPath, newPath) {
+        fs.renameSync(oldPath, newPath);
+    }
+
+    static createFileOrFolder(filePath, isFolder = false) {
+        if (isFolder) {
+            fs.mkdirSync(filePath);
+        } else {
+            fs.writeFileSync(filePath, '');
         }
     }
 

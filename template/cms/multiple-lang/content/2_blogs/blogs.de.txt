@@ -1,0 +1,21 @@
+Title: Blogs
+
+----
+
+Blogs-title: Rund um die Welt
+
+----
+
+Blogs-subtitle: In 90 Wegen
+
+----
+
+Meta-description: My Blog Overview Page
+
+----
+
+Meta-keywords: Blog Overview, Blogs Overview Page, Blog Page
+
+----
+
+Meta-robots: index, follow

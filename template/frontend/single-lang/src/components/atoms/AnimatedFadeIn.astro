@@ -1,0 +1,107 @@
+---
+import { v4 } from 'uuid';
+
+interface Props {
+    enabled: boolean;
+    usePadding?: boolean;
+    disableSlideUp?: boolean;
+    customThreshold?: number;
+    keepMobileThresholdZero?: boolean;
+}
+
+const {
+    enabled,
+    usePadding = false,
+    disableSlideUp = false,
+    customThreshold,
+    keepMobileThresholdZero,
+} = Astro.props;
+const id = `animated-fade-in-${v4()}`;
+---
+
+<div
+    id={id}
+    class:list={[
+        enabled && 'animation',
+        !disableSlideUp && usePadding && 'padding',
+        !disableSlideUp && !usePadding && 'margin',
+    ]}
+>
+    <slot />
+</div>
+
+<style>
+    .animation {
+        transition: all 0.5s ease-in;
+        opacity: 0;
+        width: 100vw;
+    }
+
+    .margin {
+        margin-top: 3rem;
+    }
+
+    .padding {
+        padding-top: 3rem;
+    }
+</style>
+
+<script
+    is:inline
+    define:vars={{
+        enabled,
+        id,
+        usePadding,
+        disableSlideUp,
+        customThreshold,
+        keepMobileThresholdZero,
+    }}
+>
+    function calculateThreshold(section) {
+        const viewportHeight = window.innerHeight;
+        const sectionHeight = section.clientHeight;
+        return (1 - 1 / (1 + viewportHeight / sectionHeight)) * 0.8;
+    }
+
+    const isMobile = () => window.innerWidth <= 991;
+
+    if (enabled) {
+        const element = document.getElementById(id);
+        const callback = (entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    if (!disableSlideUp) {
+                        if (usePadding) {
+                            element.style.paddingTop = 0;
+                        } else {
+                            element.style.marginTop = 0;
+                        }
+                    }
+                    element.style.opacity = 1;
+                    observer.disconnect();
+                }
+            });
+        };
+
+        let threshold = calculateThreshold(element);
+
+        if (keepMobileThresholdZero && isMobile()) {
+            threshold = 0;
+        }
+
+        if (customThreshold !== undefined) {
+            if (isMobile() && keepMobileThresholdZero) {
+                threshold = 0;
+            } else {
+                threshold = customThreshold;
+            }
+        }
+
+        const observer = new IntersectionObserver(callback, {
+            root: null,
+            rootMargin: '0px',
+            threshold,
+        });
+        observer.observe(element);
+    }
+</script>

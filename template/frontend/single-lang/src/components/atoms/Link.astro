@@ -1,0 +1,17 @@
+---
+import { kirbyHref } from "../../utils/URLUtils";
+
+type AnchorAttrs = astroHTML.JSX.DefinedIntrinsicElements["a"];
+
+type Props = AnchorAttrs & {
+    url: string;
+    linkText: string;
+};
+
+const props = Astro.props as Props;
+const { url, linkText, class: className, ...rest } = props;
+---
+
+<a href={kirbyHref(url)} class:list={[`btn btn-link`, className]} {...rest}>
+    {linkText}
+</a>

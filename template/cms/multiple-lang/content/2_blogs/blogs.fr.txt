@@ -1,0 +1,21 @@
+Title: Blogs
+
+----
+
+Blogs-title: Partout dans le monde
+
+----
+
+Blogs-subtitle: De 90 façons
+
+----
+
+Meta-description: My Blog Overview Page
+
+----
+
+Meta-keywords: Blog Overview, Blogs Overview Page, Blog Page
+
+----
+
+Meta-robots: index, follow

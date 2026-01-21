@@ -1,8 +1,8 @@
 import CLIHelper from '../../support/cli-helper.js';
 import { Arguments } from '../../support/arguments.js';
 import Logger from '../../support/logger.js';
-import fs from 'fs';
 import { execSync } from 'child_process';
+import FileTransferHelper from '../../support/file-helper.js';
 
 const USAGE =
     'Usage: npx create-kirby-astro --name="<name>" --langs="[<language_code1>, <language_code2>, ...]" --locales="[<locale_code1>, <locale_code2>, ...]"';
@@ -70,17 +70,17 @@ class SetupSteps {
 
     step2InstallingDependencies() {
         this._projectDir = `${this._cwd}/${this._projectName}`;
-        if (fs.existsSync(this._projectDir)) {
+        if (FileTransferHelper.fileOrFolderExists(this._projectDir)) {
             Logger.error(
                 `Directory ${this._projectDir} already exists. Please choose a different project name.`,
             );
             process.exit(1);
         }
 
-        fs.mkdirSync(this._projectDir);
+        FileTransferHelper.createFileOrFolder(this._projectDir, true);
 
         const frontendFolder = `${this._projectDir}/frontend`;
-        fs.mkdirSync(frontendFolder);
+        FileTransferHelper.createFileOrFolder(frontendFolder, true);
 
         this.installNodeDependencies();
         this.installKirbyDependencies();
@@ -140,7 +140,7 @@ class SetupSteps {
         Logger.info('Installing Kirby Dependencies.');
 
         const kirbyFolder = `${this._projectDir}/cms`;
-        fs.mkdirSync(kirbyFolder);
+        FileTransferHelper.createFileOrFolder(kirbyFolder, true);
 
         execSync(`composer create-project getkirby/plainkit .`, {
             stdio: 'inherit',
@@ -148,14 +148,14 @@ class SetupSteps {
         });
 
         // remove home and error folder inside content
-        fs.rmSync(`${this._projectDir}/cms/content/home`, {
-            recursive: true,
-            force: true,
-        });
-        fs.rmSync(`${this._projectDir}/cms/content/error`, {
-            recursive: true,
-            force: true,
-        });
+        FileTransferHelper.removeFileOrFolder(
+            `${this._projectDir}/cms/content/home`,
+            true,
+        );
+        FileTransferHelper.removeFileOrFolder(
+            `${this._projectDir}/cms/content/error`,
+            true,
+        );
 
         Logger.success('Kirby Dependencies installed successfully.');
     }

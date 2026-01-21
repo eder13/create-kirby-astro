@@ -1,16 +1,8 @@
 import Logger from '../../support/logger.js';
-import path from 'path';
-import fs from 'fs';
-import {
-    MOD_REWRITE_HEADERS_REGEX,
-    MOD_REWRITE_REWRITE_REGEX,
-    DEFAULT_TEMPLATE_FILES_TO_COPY,
-    SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE,
-} from '../../support/common.js';
-import FileTransferHelper from '../../support/file-helper.js';
-import ContentFileHelper from '../../support/content-helper.js';
+import SingleLanguageTemplate from '../../classes/single-language-template.js';
+import MultipleLanguageTemplate from '../../classes/multiple-language-template.js';
 
-class TemplateSteps {
+class CommonFiles {
     _projectName = '';
     _langs = [];
     _locales = [];
@@ -32,129 +24,22 @@ class TemplateSteps {
     }
 
     createTemplateFiles() {
-        this._moveDefaultTemplateFiles();
-        this._applySpecificTemplateFiles();
-    }
-
-    _moveDefaultTemplateFiles() {
-        Logger.info('Moving default template files');
-
-        DEFAULT_TEMPLATE_FILES_TO_COPY.forEach((file) => {
-            FileTransferHelper.copyFileOrFolder(
-                path.join(this._cwd, file.template),
-                path.join(this._cwd, `${this._projectName}/${file.target}`),
-                file.isFolder,
-            );
-        });
-
-        Logger.success('Successfully moved default template files');
-    }
-
-    _applySpecificTemplateFiles() {
-        Logger.info('Generating template files for Frontend and CMS');
-
-        this._createFrontendTemplateFiles();
-        this._createKirbyCMSTemplateFiles();
-
-        Logger.success(
-            'Successfully generated template files for Frontend and CMS',
-        );
-    }
-
-    _createFrontendTemplateFiles() {
-        this._createTemplateFiles(
-            path.join(
-                this._cwd,
-                `${this._projectName}/frontend/${SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.singleLanguage}`,
-            ),
-            path.join(
-                this._cwd,
-                `${this._projectName}/frontend/${SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.multipleLanguage}`,
-            ),
-            (filesToMove) => {
-                return filesToMove.map((file) => {
-                    const fileSplit = file
-                        .replace(
-                            `frontend\/${SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.singleLanguage}`,
-                            'frontend/src',
-                        )
-                        .split('/');
-
-                    return fileSplit.slice(0, fileSplit.length - 1).join('/');
-                });
-            },
-        );
-    }
-
-    _createKirbyCMSTemplateFiles() {
-        this._createTemplateFiles(
-            path.join(
-                this._cwd,
-                `${this._projectName}/cms/${SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.singleLanguage}`,
-            ),
-            path.join(
-                this._cwd,
-                `${this._projectName}/cms/${SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.multipleLanguage}`,
-            ),
-            (filesToMove) => {
-                return filesToMove.map((file) => {
-                    const fileSplit = file
-                        .split(
-                            `/cms/${SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.singleLanguage}`,
-                        )[1]
-                        .split('/');
-
-                    return `${this._projectName}/cms${fileSplit.slice(0, fileSplit.length - 1).join('/')}`;
-                });
-            },
-        );
-    }
-
-    _createTemplateFiles(
-        singleLanguageFolderTemplateFiles,
-        multipleLanguageFolderTemplateFiles,
-        transformFiles = (_) => [],
-    ) {
+        let TemplateClass;
         if (this._isSingleLang) {
-            FileTransferHelper.removeFileOrFolder(
-                multipleLanguageFolderTemplateFiles,
-                true,
-            );
-
-            const filesToMove = [];
-            FileTransferHelper.listTree(
-                singleLanguageFolderTemplateFiles,
-                filesToMove,
-            );
-
-            filesToMove.forEach((file, index) => {
-                ContentFileHelper.replaceInFile(
-                    file,
-                    /\{\{(lang)\}\}/g,
-                    this._defaultLang,
-                );
-            });
-
-            const destFolders = transformFiles(filesToMove);
-
-            filesToMove.forEach((file, index) => {
-                const destFolder = destFolders[index];
-                FileTransferHelper.copyFileOrFolder(file, destFolder);
-            });
-
-            FileTransferHelper.removeFileOrFolder(
-                singleLanguageFolderTemplateFiles,
-                true,
-            );
+            TemplateClass = SingleLanguageTemplate;
         } else {
-            FileTransferHelper.removeFileOrFolder(
-                singleLanguageFolderTemplateFiles,
-                true,
-            );
-
-            // TODO implement multi-language folder handling
+            TemplateClass = MultipleLanguageTemplate;
         }
+
+        const templateInstance = new TemplateClass(
+            this._projectName,
+            this._langs,
+            this._locales,
+        );
+
+        templateInstance.createFiles();
+        templateInstance.bootstrapTemplate();
     }
 }
 
-export default TemplateSteps;
+export default CommonFiles;

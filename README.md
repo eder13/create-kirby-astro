@@ -33,6 +33,8 @@ the following files need adjustments in order to function properly:
 
 ### multi setup
 
+### BE
+
 - site/config.php
     - set languages true, add getObjectTranslations to route
     - sitemaps language specific
@@ -42,16 +44,98 @@ the following files need adjustments in order to function properly:
 - template/cms/site/languages - create that folder languages and move all the languages i.e. de.php, en.php, etc. from multiple-lang
 - programmatically create template/cms/site/templates/error.php
 
+### FE
+
+- all components where const t = await TranslationHelper.getInstance(); was used
+- TranslationHelper.ts
+- types/language
+- langueas in pages folder -> delete e.g. /fr if not specified
+
 ### Template
 
 files that need replacements in template data - loop over every file in general and check if these are present
 -> replace.
 
 ```txt
+--htaccess-- (special - need to alter the file indepentently isnce it is file moving included)
+forEach(langs) -> create entry of .htaccess-template-language-mod_rewrite
+{{lang}} => de, en, ---
+{{langs}} => /de/?|/en/?|/es/? ...
+
+defaultEntry -> create entry of .htaccess-template-language-fallback-mod_rewrite
+{{langs}} => /de/?|/en/?|/es/? ...
+{{defaultLang}} => de, en, ...
+
+--languages/lang-template.php: ---
+forEach(langs) - create <lang>.php
 {{default}} => true|false
 {{locale}} => de_DE ...
 {{lang}} => de ...
-{{langs}} => /de/?|/en/?|/es/? ...
+{{code}} => de, en ...
+
+
+--config.php -- ✅
+{{disallowErrorLanguagePages}} => Disallow: /de/error\nDisallow: /en/error\n ...
+
+--sitemap-index.php -- ✅
+{{sitemapLanguages}} =>
+$latestLang = array(
+    "de" => 0,
+    "en" => 0,
+    ...
+);
+{{lastModifiedLanguageChecks}} =>
+if (preg_match('#^.*\/de(\/|\/.*)?#', $p->url())) {
+    $modified = (int)strtotime($p->modified('c'));
+    if ($modified > $latestLang["de"]) {
+        $latestLang["de"] = $modified;
+    }
+}
+if (preg_match('#^.*\/en(\/|\/.*)?#', $p->url())) {
+    $modified = (int)strtotime($p->modified('c'));
+    if ($modified > $latestLang["en"]) {
+        $latestLang["en"] = $modified;
+    }
+}
+...
+
+-- Navbar.astro --
+{{languageSelectorOptions}} =>
+{
+    id: "en",
+    title: { value: "English" },
+    url: "/en",
+},
+{
+    id: "de",
+    title: { value: "German" },
+    url: "/de",
+},
+...
+
+-- TranslationHelper.ts --
+{{availableLanguagesTranslations}}
+=>
+[Language.DE]: LanguageEntry;
+[Language.EN]: LanguageEntry;
+...
+{{getCurrentAstroLanguageChecks}}
+=>
+if (pathname.startsWith(`/${Language.DE}`)) {
+    return Language.DE;
+}
+if (pathname.startsWith(`/${Language.EN}`)) {
+    return Language.EN;
+}
+...
+
+
+error.astro ✅
+{{lang}}
+
+Layout.astro ✅
+{{lang}}
+
 ```
 
 usage
