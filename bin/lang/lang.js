@@ -1,4 +1,5 @@
 import locales from 'i18n-locales' with { type: 'json' };
+import localeCodes from 'locale-codes';
 
 export const SUPPORTED_LANGS = ['en', 'de', 'fr', 'es', 'it'];
 
@@ -19,4 +20,10 @@ export const getSupportedLocales = () => {
     });
 
     return langLocalesList;
+};
+
+export const getLocalesByLang = (lang) => {
+    return localeCodes.all.filter(
+        (localCode) => localCode['iso639-1'] === lang,
+    );
 };

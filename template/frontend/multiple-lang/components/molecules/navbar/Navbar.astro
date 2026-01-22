@@ -45,13 +45,18 @@ const t = await TranslationHelper.getInstance();
         </div>
         <Dropdown
             skipHeadlineInDropdown
-            class="d-lg-none"
+            class="d-none d-lg-block"
             id="languageDropdownMobile"
-            title={{ value: "lang" }}
+            title={{ value: "Lang" }}
             url="#"
-            subpages={[
-                {{languageSelectorOptions}}
-            ]}
+            subpages={t.getLanguageOptions().map(language => ({
+                active: language === t.getCurrentAstroLanguage(Astro.url.pathname),
+                title: {
+                    value: language.toUpperCase()
+                },
+                url: `/${language}`,
+                onClick: `javascript:document.dispatchEvent(new CustomEvent('${CommonConstants.CUSTOM_EVENT_TRIGGER_LANGUAGE_SCRIPT}', { detail: { language: '${language}' } }));return false;`
+            }))}
         />
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">

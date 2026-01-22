@@ -66,13 +66,12 @@ defaultEntry -> create entry of .htaccess-template-language-fallback-mod_rewrite
 {{langs}} => /de/?|/en/?|/es/? ...
 {{defaultLang}} => de, en, ...
 
---languages/lang-template.php: ---
+--languages/lang-template.php: ✅ ---
 forEach(langs) - create <lang>.php
 {{default}} => true|false
 {{locale}} => de_DE ...
-{{lang}} => de ...
+{{name}} => German, Englisg..
 {{code}} => de, en ...
-
 
 --config.php -- ✅
 {{disallowErrorLanguagePages}} => Disallow: /de/error\nDisallow: /en/error\n ...
@@ -84,7 +83,7 @@ $latestLang = array(
     "en" => 0,
     ...
 );
-{{lastModifiedLanguageChecks}} =>
+{{lastModifiedLanguageChecks}}=>
 if (preg_match('#^.*\/de(\/|\/.*)?#', $p->url())) {
     $modified = (int)strtotime($p->modified('c'));
     if ($modified > $latestLang["de"]) {
@@ -99,21 +98,15 @@ if (preg_match('#^.*\/en(\/|\/.*)?#', $p->url())) {
 }
 ...
 
--- Navbar.astro --
-{{languageSelectorOptions}} =>
+-- types/language.ts -- ✅
+{{languagesTypes}} =>
 {
-    id: "en",
-    title: { value: "English" },
-    url: "/en",
-},
-{
-    id: "de",
-    title: { value: "German" },
-    url: "/de",
-},
-...
+    DE = "de",
+    EN = "en",
+}
 
--- TranslationHelper.ts --
+
+-- TranslationHelper.ts -- ✅
 {{availableLanguagesTranslations}}
 =>
 [Language.DE]: LanguageEntry;

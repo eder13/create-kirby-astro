@@ -39,6 +39,7 @@ class CommonFiles {
 
         templateInstance.createFiles();
         templateInstance.bootstrapTemplate();
+        templateInstance.cleanupTemplate();
     }
 }
 
