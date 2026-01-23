@@ -1,0 +1,170 @@
+[INFO] [2026-01-23T09:02:12.349Z] Building project with name=myProjectName, langs=[en, de], locales=[en-GB, de-AT]
+[INFO] [2026-01-23T09:02:12.357Z] Installing Node Dependencies.
+
+> npx
+> create-astro . --template minimal --install --no-git
+
+
+ astro   Launch sequence initiated.
+
+      ◼  dir Using . as project directory
+      ◼  tmpl Using minimal as project template
+      ◼  Sounds good! You can always run git init manually.
+
+[?25l ██████  Project initializing...
+         ▶ Template copying...
+         □ Dependencies
+[2K[1A[2K[1A[2K[1A[2K[G ██████  Project initializing...
+         ✔ Template copied
+         □ Dependencies
+[2K[1A[2K[1A[2K[1A[2K[G ██████  Project initializing...
+         ✔ Template copied
+         ▶ Dependencies installing with npm...
+[2K[1A[2K[1A[2K[1A[2K[G ██████  Project initializing...
+         ■ Template copied
+         ▶ Dependencies installing with npm...
+[2K[1A[2K[1A[2K[1A[2K[G ██████  Project initializing...
+         ■ Template copied
+         ✔ Dependencies installed
+[2K[1A[2K[1A[2K[1A[2K[G      ✔  Project initialized!
+         ■ Template copied
+         ■ Dependencies installed
+
+  next   Liftoff confirmed. Explore your project!
+         Run npm run dev to start the dev server. CTRL+C to stop.
+         Add frameworks like react or tailwind using astro add.
+
+         Stuck? Join us at https://astro.build/chat
+
+added 54 packages, and audited 330 packages in 1s
+
+157 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+added 237 packages, and audited 567 packages in 3s
+
+273 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[SUCCESS] [2026-01-23T09:02:26.206Z] Node Dependencies installed successfully.
+[INFO] [2026-01-23T09:02:26.207Z] Installing Kirby Dependencies.
+[SUCCESS] [2026-01-23T09:02:28.270Z] Kirby Dependencies installed successfully.
+[INFO] [2026-01-23T09:02:28.270Z] Moving Template files
+[INFO] [2026-01-23T09:02:28.270Z] Moving default template files for type multiple language
+[SUCCESS] [2026-01-23T09:02:28.484Z] Successfully moved default template files
+[INFO] [2026-01-23T09:02:28.484Z] Creating .htaccess file
+#####** Debugging Information #####
+#####** pathContentToBeAddedModRewrite /Users/sranftl/private_projects/create-kirby-astro/template/htaccess/htaccess-template-language/.htaccess-template-language-fallback-mod_rewrite
+htAccessFile: /Users/sranftl/private_projects/create-kirby-astro/myProjectName/cms/.htaccess
+RegEx: /(<IfModule\s+mod_rewrite\.c>\s*\n)/i
+contentPrefix: <IfModule mod_rewrite.c>
+
+contentToBeAddedModRewrite: ### BEGIN KIRBY ASTRO ###
+
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^(en/|de/|/cms/?)) [NC]
+RewriteRule ^(.*)$ /en/$1 [R=302,L]
+
+### END KIRBY ASTRO ###
+# - standard config - #
+
+#####** Debugging Information #####
+#####** pathContentToBeAddedModRewrite /Users/sranftl/private_projects/create-kirby-astro/template/htaccess/htaccess-template-language/.htaccess-template-language-mod_rewrite
+htAccessFile: /Users/sranftl/private_projects/create-kirby-astro/myProjectName/cms/.htaccess
+RegEx: /(<IfModule\s+mod_rewrite\.c>\s*\n)/i
+contentPrefix: <IfModule mod_rewrite.c>
+
+contentToBeAddedModRewrite: ### BEGIN KIRBY ASTRO ###
+
+RewriteCond %{HTTP:Cookie} SELECTED_LANGUAGE_COOKIE=en [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} ^/$ [NC]
+RewriteRule ^(.*)$ /en/ [R=302,L]
+
+RewriteCond %{HTTP:Cookie} SELECTED_LANGUAGE_COOKIE=en [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^(en/|de/|/cms/?)) [NC]
+RewriteRule ^(.*)$ /en/$1 [R=302,L]
+
+RewriteCond %{HTTP:Accept-Language} ^en [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} ^/$ [NC]
+RewriteRule ^(.*)$ /en/ [R=302,L]
+
+RewriteCond %{HTTP:Accept-Language} ^en [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^(en/|de/|/cms/?)) [NC]
+RewriteRule ^(.*)$ /en/$1 [R=302,L]
+
+### END KIRBY ASTRO ###
+### BEGIN KIRBY ASTRO ###
+
+RewriteCond %{HTTP:Cookie} SELECTED_LANGUAGE_COOKIE=de [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} ^/$ [NC]
+RewriteRule ^(.*)$ /de/ [R=302,L]
+
+RewriteCond %{HTTP:Cookie} SELECTED_LANGUAGE_COOKIE=de [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^(en/|de/|/cms/?)) [NC]
+RewriteRule ^(.*)$ /de/$1 [R=302,L]
+
+RewriteCond %{HTTP:Accept-Language} ^de [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} ^/$ [NC]
+RewriteRule ^(.*)$ /de/ [R=302,L]
+
+RewriteCond %{HTTP:Accept-Language} ^de [NC]
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|map|pdf|mp3|psd)$ [NC]
+RewriteCond %{REQUEST_URI} !^/_built [NC]
+RewriteCond %{REQUEST_URI} !^/stats [NC]
+RewriteCond %{REQUEST_URI} !(^(en/|de/|/cms/?)) [NC]
+RewriteRule ^(.*)$ /de/$1 [R=302,L]
+
+### END KIRBY ASTRO ###
+
+#####** Debugging Information #####
+#####** pathContentToBeAddedModRewrite /Users/sranftl/private_projects/create-kirby-astro/template/htaccess/htaccess-common/.htaccess-common-mod_rewrite
+htAccessFile: /Users/sranftl/private_projects/create-kirby-astro/myProjectName/cms/.htaccess
+RegEx: /# - standard config - #/
+contentPrefix: 
+contentToBeAddedModRewrite: 
+#####** Debugging Information #####
+#####** pathContentToBeAddedModRewrite /Users/sranftl/private_projects/create-kirby-astro/template/htaccess/htaccess-common/.htaccess-common-mod_headers
+htAccessFile: /Users/sranftl/private_projects/create-kirby-astro/myProjectName/cms/.htaccess
+RegEx: /(<IfModule\s+mod_headers\.c>\s*\n)/i
+contentPrefix: <IfModule mod_headers.c>
+
+contentToBeAddedModRewrite: 
+[SUCCESS] [2026-01-23T09:02:28.487Z] Successfully created .htaccess file and moved to root
+[INFO] [2026-01-23T09:02:28.487Z] Adding scripts to package.json
+[SUCCESS] [2026-01-23T09:02:28.487Z] Successfully added scripts to package.json
+[INFO] [2026-01-23T09:02:28.487Z] Creating .env file
+[SUCCESS] [2026-01-23T09:02:28.487Z] Successfully created .env file and moved to root
+[INFO] [2026-01-23T09:02:28.487Z] Creating .gitignore file
+[SUCCESS] [2026-01-23T09:02:28.487Z] Successfully created .gitignore file and moved to root
+[INFO] [2026-01-23T09:02:28.487Z] Bootstrapping multiple language template
+[INFO] [2026-01-23T09:02:28.492Z] Cleaning up unused template files for copied languages for Frontend
+[SUCCESS] [2026-01-23T09:02:28.494Z] Successfully cleaned up unused template files for copied languages
+[SUCCESS] [2026-01-23T09:02:28.514Z] Successfully Bootstrapped multiple language template
+[INFO] [2026-01-23T09:02:28.514Z] Cleaning up unused template files
+[SUCCESS] [2026-01-23T09:02:28.537Z] Successfully cleaned up unused template files

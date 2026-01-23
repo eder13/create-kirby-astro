@@ -53,9 +53,11 @@ class CommonFiles {
             this._createCommonHtaccessConfigHeaders(htAccessFile);
             this._createCommonHtaccessConfigRewrite(htAccessFile);
         } else {
-            this._createCommonHtaccessConfigHeaders(htAccessFile);
             this._createCommonHtaccessConfigRewrite(htAccessFile);
-            // TODO with language redirects - multiple language setup
+            this._createCommonHtaccessConfigHeaders(htAccessFile);
+            this._createDefaultLanguageRedirect(htAccessFile);
+            this._createLanguageRedirects(htAccessFile);
+            this._cleanUpStrings(htAccessFile);
         }
 
         FileTransferHelper.renameFileOrFolder(
@@ -84,19 +86,82 @@ class CommonFiles {
         );
     }
 
+    _createLanguageRedirects(htAccessFile = '') {
+        this._addCommonHtaccessContent(
+            htAccessFile,
+            `htaccess-template-language/.htaccess-template-language-mod_rewrite`,
+            MOD_REWRITE_REWRITE_REGEX,
+            '<IfModule mod_rewrite.c>\n',
+            (content) => {
+                let finalContent = content;
+
+                for (let i = 0; i < this._langs.length; i++) {
+                    const replacedContentWithLanguage = finalContent
+                        .replace(/\{\{lang\}\}/g, this._langs[i])
+                        .replace(
+                            /\{\{langs\}\}/g,
+                            this._langs.map((lang) => `/${lang}`).join('|'),
+                        );
+                    finalContent = replacedContentWithLanguage;
+                    if (i < this._langs.length - 1) {
+                        finalContent += content;
+                    }
+                }
+
+                return finalContent;
+            },
+        );
+    }
+
+    _createDefaultLanguageRedirect(htAccessFile = '') {
+        this._addCommonHtaccessContent(
+            htAccessFile,
+            `htaccess-template-language/.htaccess-template-language-fallback-mod_rewrite`,
+            MOD_REWRITE_REWRITE_REGEX,
+            '<IfModule mod_rewrite.c>\n',
+            (content) => {
+                return content
+                    .replace(/\{\{defaultLang\}\}/g, this._defaultLang)
+                    .replace(
+                        /\{\{langs\}\}/g,
+                        this._langs.map((lang) => `/${lang}`).join('|'),
+                    );
+            },
+        );
+    }
+
+    _cleanUpStrings(htAccessFile = '') {
+        ContentFileHelper.replaceInFile(
+            htAccessFile,
+            /<IfModule mod_rewrite.c>\n/g,
+            ' ',
+        );
+
+        const fileContent = ContentFileHelper.readFile(htAccessFile);
+        ContentFileHelper.writeFile(
+            htAccessFile,
+            '<IfModule mod_rewrite.c>\n' + fileContent,
+        );
+    }
+
     _addCommonHtaccessContent(
         htAccessFile,
         htAccessPathToBeAdded,
         RegEx,
         contentPrefix = '',
+        replace = (content) => content,
     ) {
         const pathContentToBeAddedModRewrite = path.join(
             this._cwd,
             `template/htaccess/${htAccessPathToBeAdded}`,
         );
-        const contentToBeAddedModRewrite = ContentFileHelper.readFile(
+        let contentToBeAddedModRewrite = ContentFileHelper.readFile(
             pathContentToBeAddedModRewrite,
         );
+
+        if (replace) {
+            contentToBeAddedModRewrite = replace(contentToBeAddedModRewrite);
+        }
 
         ContentFileHelper.replaceInFile(
             htAccessFile,
