@@ -5,6 +5,8 @@ import {
     getSupportedLocales,
 } from '../lang/lang.js';
 
+let isVerboseMode = false;
+
 class CLIHelper {
     static hasValidArguments(args) {
         const argsCompare = Object.values(Arguments).map(
@@ -18,6 +20,10 @@ class CLIHelper {
                     arg.startsWith(expectedArg),
                 );
             });
+
+        isVerboseMode =
+            this.getArgumentValue(args, Arguments.ARGUMENT_VERBOSE.arg) ===
+            'true';
 
         // if langs is specified, locales has to be specified as well and vice versa
         const langsSpecified = this.getArgumentValue(
@@ -106,6 +112,10 @@ class CLIHelper {
             chosenLangs,
             chosenLocales,
         };
+    }
+
+    static isVerboseModeEnabled() {
+        return isVerboseMode;
     }
 }
 

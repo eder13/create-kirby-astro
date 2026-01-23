@@ -101,7 +101,7 @@ export const FILES_WITH_TEMPLATE_STRINGS_TO_REPLACE = [
     },
     {
         fileName: 'templates/error.php',
-        regExs: [/.*?/g],
+        regExs: [/\{\{errorPageTemplate\}\}/g],
         getReplacement: (langs) => {
             return `
             <?php
@@ -207,6 +207,27 @@ export const FILES_WITH_TEMPLATE_STRINGS_TO_REPLACE = [
 
                 return fullDestPath;
             });
+        },
+    },
+    {
+        fileName: 'content/',
+        regExs: [/somethingthatdoesnotexistandishopefullyimpossibletomatch/],
+        getReplacement: () => '',
+        createFile: (langs, _, __, file) => {
+            if (langs.length === 1) {
+                const fullPath = process.cwd() + '/' + file;
+                if (file.includes(`${langs[0]}.txt`)) {
+                    const newName = fullPath.replace(`${langs[0]}.txt`, `txt`);
+                    FileTransferHelper.renameFileOrFolder(fullPath, newName);
+                    return newName;
+                } else {
+                    FileTransferHelper.removeFileOrFolder(fullPath, false);
+                }
+
+                return fullPath;
+            }
+
+            return process.cwd() + '/' + file;
         },
     },
 ];

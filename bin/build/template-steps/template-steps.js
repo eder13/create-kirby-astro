@@ -1,6 +1,7 @@
 import Logger from '../../support/logger.js';
 import SingleLanguageTemplate from '../../classes/single-language-template.js';
 import MultipleLanguageTemplate from '../../classes/multiple-language-template.js';
+import CLIHelper from '../../support/cli-helper.js';
 
 class CommonFiles {
     _projectName = '';
@@ -20,7 +21,9 @@ class CommonFiles {
             this._isSingleLang = false;
         }
 
-        Logger.info('Moving Template files');
+        if (CLIHelper.isVerboseModeEnabled()) {
+            Logger.info('Moving Template files');
+        }
     }
 
     createTemplateFiles() {

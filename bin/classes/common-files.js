@@ -6,6 +6,7 @@ import {
 } from '../support/common.js';
 import ContentFileHelper from '../support/content-helper.js';
 import FileTransferHelper from '../support/file-helper.js';
+import CLIHelper from '../support/cli-helper.js';
 
 class CommonFiles {
     _projectName = '';
@@ -36,7 +37,8 @@ class CommonFiles {
     }
 
     _createHtaccessFile() {
-        Logger.info('Creating .htaccess file');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info('Creating .htaccess file');
 
         const htAccessFile = path.join(
             this._cwd,
@@ -65,7 +67,10 @@ class CommonFiles {
             path.join(this._cwd, `${this._projectName}/.htaccess`),
         );
 
-        Logger.success('Successfully created .htaccess file and moved to root');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success(
+                'Successfully created .htaccess file and moved to root',
+            );
     }
 
     _createCommonHtaccessConfigHeaders(htAccessFile = '') {
@@ -171,7 +176,8 @@ class CommonFiles {
     }
 
     _addScriptsPackageJson() {
-        Logger.info('Adding scripts to package.json');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info('Adding scripts to package.json');
 
         const packageJsonFile = path.join(
             this._cwd,
@@ -194,11 +200,13 @@ class CommonFiles {
             JSON.stringify(packageJson, null, 2),
         );
 
-        Logger.success('Successfully added scripts to package.json');
+        if (CLIHelper.isVerboseModeEnabled()) {
+            Logger.success('Successfully added scripts to package.json');
+        }
     }
 
     _createEnvFile() {
-        Logger.info('Creating .env file');
+        CLIHelper.isVerboseModeEnabled() && Logger.info('Creating .env file');
 
         const envFile = path.join(this._cwd, `${this._projectName}/.env`);
         const defaultContent =
@@ -209,11 +217,13 @@ class CommonFiles {
             mode: 0o600,
         });
 
-        Logger.success('Successfully created .env file and moved to root');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success('Successfully created .env file and moved to root');
     }
 
     _createGitIgnoreFile() {
-        Logger.info('Creating .gitignore file');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info('Creating .gitignore file');
 
         const gitIgnoreTemplateFile = path.join(
             this._cwd,
@@ -227,9 +237,10 @@ class CommonFiles {
 
         FileTransferHelper.copyFileToFile(gitIgnoreTemplateFile, gitignoreFile);
 
-        Logger.success(
-            'Successfully created .gitignore file and moved to root',
-        );
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success(
+                'Successfully created .gitignore file and moved to root',
+            );
     }
 }
 

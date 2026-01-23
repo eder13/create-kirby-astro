@@ -1,0 +1,21 @@
+Title: Blogs
+
+----
+
+Blogs-title: In tutto il mondo
+
+----
+
+Blogs-subtitle: Tra 90 giorni
+
+----
+
+Meta-description: My Blog Overview Page
+
+----
+
+Meta-keywords: Blog Overview, Blogs Overview Page, Blog Page
+
+----
+
+Meta-robots: index, follow

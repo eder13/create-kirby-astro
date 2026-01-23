@@ -10,6 +10,7 @@ import CommonFiles from './common-files.js';
 import ContentFileHelper from '../support/content-helper.js';
 import { FILES_WITH_TEMPLATE_STRINGS_TO_REPLACE } from '../support/replace-template-values.js';
 import fs from 'fs';
+import CLIHelper from '../support/cli-helper.js';
 
 class GenericLanguageTemplate {
     _projectName = '';
@@ -37,7 +38,8 @@ class GenericLanguageTemplate {
     bootstrapTemplate() {}
 
     cleanupTemplate() {
-        Logger.info('Cleaning up unused template files');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info('Cleaning up unused template files');
 
         const singleLangPathFE = path.join(
             this._cwd,
@@ -66,15 +68,17 @@ class GenericLanguageTemplate {
         FileTransferHelper.removeFileOrFolder(multipleLangPathBE, true);
         FileTransferHelper.removeFileOrFolder(langPhpTemplateFile, false);
 
-        Logger.success('Successfully cleaned up unused template files');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success('Successfully cleaned up unused template files');
     }
 
     _moveDefaultTemplateFiles() {
-        Logger.info(
-            'Moving default template files for type ' +
-                (this._isSingleLang ? 'single' : 'multiple') +
-                ' language',
-        );
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info(
+                'Moving default template files for type ' +
+                    (this._isSingleLang ? 'single' : 'multiple') +
+                    ' language',
+            );
 
         DEFAULT_TEMPLATE_FILES_TO_COPY.forEach((file) => {
             FileTransferHelper.copyFileOrFolder(
@@ -84,7 +88,8 @@ class GenericLanguageTemplate {
             );
         });
 
-        Logger.success('Successfully moved default template files');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success('Successfully moved default template files');
     }
 
     _bootstrapFrontendTemplateFiles(pathSingleOrMultiple) {
@@ -120,7 +125,7 @@ class GenericLanguageTemplate {
                         .split(`/cms/${pathSingleOrMultiple}`)[1]
                         .split('/');
 
-                    return `${this._projectName}/cms${fileSplit.slice(0, fileSplit.length - 1).join('/')}`;
+                    return `${this._cwd}/${this._projectName}/cms${fileSplit.slice(0, fileSplit.length - 1).join('/')}`;
                 });
             },
         );
@@ -135,7 +140,7 @@ class GenericLanguageTemplate {
 
         filesToMove.forEach((file) => {
             const templateFile = FILES_WITH_TEMPLATE_STRINGS_TO_REPLACE.find(
-                (val) => file.endsWith(val.fileName),
+                (val) => file.includes(val.fileName),
             );
 
             if (templateFile) {
@@ -201,7 +206,10 @@ class GenericLanguageTemplate {
 
         filesToMove.forEach((file, index) => {
             const destFolder = destFolders[index];
-            FileTransferHelper.copyFileOrFolder(file, destFolder);
+            FileTransferHelper.copyFileOrFolder(
+                path.isAbsolute(file) ? file : `${this._cwd}/${file}`,
+                destFolder,
+            );
         });
     }
 
@@ -215,37 +223,30 @@ class GenericLanguageTemplate {
 
         if (Array.isArray(filePathOrPaths)) {
             filePathOrPaths.forEach((filePath) => {
-                const newPath = filePath.replace(
-                    `/cms/${pathSingleOrMultiple}`,
-                    `/cms`,
-                );
-
-                const newPathFolder = path.dirname(`${this._cwd}/${newPath}`);
-                if (!fs.existsSync(newPathFolder)) {
-                    fs.mkdirSync(newPathFolder, { recursive: true });
-                }
-
-                FileTransferHelper.renameFileOrFolder(
-                    `${this._cwd}/${filePath}`,
-                    `${this._cwd}/${newPath}`,
-                );
+                this._moveFiles(filePath, pathSingleOrMultiple);
             });
         } else {
-            const newPath = filePathOrPaths.replace(
-                `/cms/${pathSingleOrMultiple}`,
-                `/cms`,
-            );
-
-            const newPathFolder = path.dirname(`${this._cwd}/${newPath}`);
-            if (!fs.existsSync(newPathFolder)) {
-                fs.mkdirSync(newPathFolder, { recursive: true });
-            }
-
-            FileTransferHelper.renameFileOrFolder(
-                `${this._cwd}/${filePathOrPaths}`,
-                `${this._cwd}/${newPath}`,
-            );
+            this._moveFiles(filePathOrPaths, pathSingleOrMultiple);
         }
+    }
+
+    _moveFiles(filePath, pathSingleOrMultiple) {
+        const newPath = filePath.replace(
+            `/cms/${pathSingleOrMultiple}`,
+            `/cms`,
+        );
+
+        const newPathFolder = path.isAbsolute(newPath)
+            ? path.dirname(newPath)
+            : path.dirname(`${this._cwd}/${newPath}`);
+        if (!fs.existsSync(newPathFolder)) {
+            fs.mkdirSync(newPathFolder, { recursive: true });
+        }
+
+        FileTransferHelper.renameFileOrFolder(
+            path.isAbsolute(filePath) ? filePath : `${this._cwd}/${filePath}`,
+            path.isAbsolute(newPath) ? newPath : `${this._cwd}/${newPath}`,
+        );
     }
 }
 

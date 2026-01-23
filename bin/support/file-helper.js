@@ -1,8 +1,22 @@
 import fs from 'fs';
 import path from 'path';
+import Logger from './logger.js';
+import CLIHelper from './cli-helper.js';
 
 class FileTransferHelper {
     static copyFileOrFolder(src, dest, isFolder = false) {
+        if (src.includes('.DS_Store') || dest.includes('.DS_Store')) {
+            CLIHelper.isVerboseModeEnabled() &&
+                Logger.warn('Skipping .DS_Store file');
+            return;
+        }
+
+        if (!fs.existsSync(src)) {
+            CLIHelper.isVerboseModeEnabled() &&
+                Logger.warn(`Source does not exist, skipping: ${src}`);
+            return false;
+        }
+
         if (isFolder) {
             fs.mkdirSync(dest, { recursive: true });
             fs.cpSync(src, dest, { recursive: true });
@@ -32,6 +46,14 @@ class FileTransferHelper {
     }
 
     static renameFileOrFolder(oldPath, newPath) {
+        if (!fs.existsSync(oldPath)) {
+            CLIHelper.isVerboseModeEnabled() &&
+                Logger.warn(
+                    `Source does not exist for renaming, skipping: ${oldPath}`,
+                );
+            return;
+        }
+
         fs.renameSync(oldPath, newPath);
     }
 

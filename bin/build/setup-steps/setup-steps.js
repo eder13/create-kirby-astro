@@ -5,7 +5,7 @@ import { execSync } from 'child_process';
 import FileTransferHelper from '../../support/file-helper.js';
 
 const USAGE =
-    'Usage: npx create-kirby-astro --name="<name>" --langs="[<language_code1>, <language_code2>, ...]" --locales="[<locale_code1>, <locale_code2>, ...]"';
+    'Usage: npx create-kirby-astro --name="<name>" --langs="[<language_code1>, <language_code2>, ...]" --locales="[<locale_code1>, <locale_code2>, ...]" --verbose="true"';
 
 class SetupSteps {
     _args = [''];
@@ -60,7 +60,7 @@ class SetupSteps {
         );
 
         Logger.info(
-            `Building project with name=${name}, langs=[${chosenLangs.join(', ')}], locales=[${chosenLocales.join(', ')}]`,
+            `Building project with name="${name}", langs="[${chosenLangs.join(', ')}]", locales="[${chosenLocales.join(', ')}]"`,
         );
 
         this._projectName = name;
@@ -87,7 +87,9 @@ class SetupSteps {
     }
 
     installNodeDependencies() {
-        Logger.info('Installing Node Dependencies.');
+        if (CLIHelper.isVerboseModeEnabled()) {
+            Logger.info('Installing Node Dependencies.');
+        }
 
         execSync(
             'npm create astro@latest . -- --template minimal --install --no-git',
@@ -133,11 +135,15 @@ class SetupSteps {
             },
         );
 
-        Logger.success('Node Dependencies installed successfully.');
+        if (CLIHelper.isVerboseModeEnabled()) {
+            Logger.success('Node Dependencies installed successfully.');
+        }
     }
 
     installKirbyDependencies() {
-        Logger.info('Installing Kirby Dependencies.');
+        if (CLIHelper.isVerboseModeEnabled()) {
+            Logger.info('Installing Kirby Dependencies.');
+        }
 
         const kirbyFolder = `${this._projectDir}/cms`;
         FileTransferHelper.createFileOrFolder(kirbyFolder, true);
@@ -157,7 +163,9 @@ class SetupSteps {
             true,
         );
 
-        Logger.success('Kirby Dependencies installed successfully.');
+        if (CLIHelper.isVerboseModeEnabled()) {
+            Logger.success('Kirby Dependencies installed successfully.');
+        }
     }
 }
 

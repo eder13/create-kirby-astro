@@ -8,4 +8,7 @@ export const Arguments = {
     ARGUMENT_LOCALES: {
         arg: '--locales=',
     },
+    ARGUMENT_VERBOSE: {
+        arg: '--verbose=',
+    },
 };

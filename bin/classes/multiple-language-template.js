@@ -4,6 +4,7 @@ import { SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE } from '../supp
 import { SUPPORTED_LANGS } from '../lang/lang.js';
 import FileTransferHelper from '../support/file-helper.js';
 import path from 'path';
+import CLIHelper from '../support/cli-helper.js';
 
 class MultipleLanguageTemplate extends GenericLanguageTemplate {
     constructor(_projectName, _langs, _locales) {
@@ -11,7 +12,8 @@ class MultipleLanguageTemplate extends GenericLanguageTemplate {
     }
 
     bootstrapTemplate() {
-        Logger.info('Bootstrapping multiple language template');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info('Bootstrapping multiple language template');
         this._bootstrapFrontendTemplateFiles(
             SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.multipleLanguage,
         );
@@ -19,13 +21,17 @@ class MultipleLanguageTemplate extends GenericLanguageTemplate {
         this._bootstrapKirbyTemplateFiles(
             SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE.multipleLanguage,
         );
-        Logger.success('Successfully Bootstrapped multiple language template');
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success(
+                'Successfully Bootstrapped multiple language template',
+            );
     }
 
     _cleanUpFrontendUnusedTemplateFilesCopiedLanguages() {
-        Logger.info(
-            'Cleaning up unused template files for copied languages for Frontend',
-        );
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.info(
+                'Cleaning up unused template files for copied languages for Frontend',
+            );
 
         SUPPORTED_LANGS.forEach((lang) => {
             if (!this._langs.includes(lang)) {
@@ -40,9 +46,10 @@ class MultipleLanguageTemplate extends GenericLanguageTemplate {
             }
         });
 
-        Logger.success(
-            'Successfully cleaned up unused template files for copied languages',
-        );
+        CLIHelper.isVerboseModeEnabled() &&
+            Logger.success(
+                'Successfully cleaned up unused template files for copied languages',
+            );
     }
 }
 

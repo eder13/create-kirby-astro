@@ -1,0 +1,33 @@
+Title: Home
+
+----
+
+Showcase-headline: Bonjour
+
+----
+
+Showcase-sub-headline: Salut ! Je suis John Doe. Sur cette page, je partage mes expériences. N'hésitez pas à visiter mon blog !
+
+----
+
+Showcase-images:
+
+- person-5956897_1920.jpg
+- monk-6113501_1920.png
+- silhouette-4332215_1920.jpg
+
+----
+
+Meta-description: Homepage
+
+----
+
+Meta-keywords: Homepage, Blog, John Doe, Blogging, Life, Stars, Universe
+
+----
+
+Meta-robots: index, follow
+
+----
+
+Showcase-image: - person-5956897_1920.jpg

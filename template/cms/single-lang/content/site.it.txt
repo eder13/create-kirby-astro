@@ -1,0 +1,100 @@
+Title: Demokit Astro
+
+----
+
+Country: Italia
+
+----
+
+Logo: - logo.png
+
+----
+
+Favicon: - favicon.ico
+
+----
+
+Favicon-apple-touch-icon: - apple-touch-icon.png
+
+----
+
+Favicon-48x-48x: - favicon-48x48.png
+
+----
+
+Favicon-svg: - favicon.svg
+
+----
+
+Web-app-manifest-144x144: - web-app-manifest-144x144.png
+
+----
+
+Web-app-manifest-192x192: - web-app-manifest-192x192.png
+
+----
+
+Web-app-manifest-512x512: - web-app-manifest-512x512.png
+
+----
+
+Web-app-manifest-json:
+
+{
+  "name": "Demokit Astro",
+  "short_name": "Demokit Astro",
+  "icons": [
+    {
+      "src": "http://localhost/cms/media/site/3e3ae491c1-1768405449/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "http://localhost/cms/media/site/c0d329c411-1768405456/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "./../../../"
+}
+
+----
+
+Ogimage: - og-logo.png
+
+----
+
+Contact-name: John Doe
+
+----
+
+Contact-address: Rome 1, 6389
+
+----
+
+Contact-country: Italia
+
+----
+
+Contact-instagram: https://example.com/
+
+----
+
+Contact-facebook: https://example.com/
+
+----
+
+Contact-x: https://example.com/
+
+----
+
+Contact-county: Italia
+
+----
+
+Contact-zip: Italia

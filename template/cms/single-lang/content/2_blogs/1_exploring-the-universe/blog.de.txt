@@ -1,0 +1,33 @@
+Title: Das Universum erkunden
+
+----
+
+Cover: - nebula-6672283_1920_cover.jpg
+
+----
+
+Blog-title: 
+
+----
+
+Blog-subtitle: Unsere Aufgabe zum Rand des Nichts zu gelangen
+
+----
+
+Blog-title-image: - nebula-6672283_1920.jpg
+
+----
+
+Blog-content: [{"content":{"text":"<p>L<a href=\"https://example.com/\">orem ipsum dolor sit a</a>met consectetur adipisicing elit. Dolorem, cum delectus. Repellendus reiciendis unde expedita cupiditate doloribus, provident ab aspernatur? <strong>Lorem ipsum</strong>, dolor sit amet consectetur adipisicing elit. Aliquam repellat nulla recusandae vel, dolores ea rem sunt quam iusto vero earum voluptate, quos excepturi, quae dolorum mollitia libero! Autem a commodi, <u>omnis quaerat culpa</u> cupiditate rerum aperiam ducimus ut quidem inventore dicta earum vitae. Accusamus eius itaque dicta vero possimus deleniti perspiciatis dignissimos totam, dolore quo magni qui beatae ani<strong><em>mi expedita modi ea</em></strong> facere placeat, hic sint. Excepturi totam saepe nam voluptas nisi. Nihil non consequuntur illo atque ea quas, dolores commodi magni eius iure porro. Delectus molestiae illum soluta, quod perferendis, perspiciatis hic est magni quidem impedit, similique esse.</p>"},"id":"681fecbc-3d56-4e57-a02c-21273e5a526b","isHidden":false,"type":"text"},{"content":{"level":"h2","text":"Foo"},"id":"86cbea62-518e-4c3b-af9e-63a57dc1dd3b","isHidden":false,"type":"heading"},{"content":{"location":"kirby","image":["mercury-6618698_1920.jpg"],"src":"","alt":"moon-picture","caption":"Staring at the Moon","link":"https://example.com/","ratio":"","crop":"false"},"id":"08fd1c3b-17e2-456b-970b-0b851273b964","isHidden":false,"type":"image"},{"content":[],"id":"6d7450f3-555e-4856-9ddf-f2660abdff09","isHidden":false,"type":"line"},{"content":{"text":"<p>Some of the known of astronauts are:</p>"},"id":"1c94022d-178f-49e2-ad45-80c79bb30dc6","isHidden":false,"type":"text"},{"content":{"text":"<ul><li>Neil Armstrong</li><li>Alexander Gerst</li><li>Matthias Maurer</li><li>John Cassada</li><li>Philippe Perrin</li></ul>"},"id":"c2c23bce-6e3f-4a7b-8f48-37d6ba49230a","isHidden":false,"type":"list"},{"content":{"text":"Reach out for the stars","citation":"me"},"id":"f8dfd5a3-f7b5-4f63-9871-de27cc952093","isHidden":false,"type":"quote"},{"content":{"level":"h2","text":"Bar"},"id":"1fac37f8-e8cf-4aae-8d2e-04da8d1e42a0","isHidden":false,"type":"heading"},{"content":{"text":"<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam saepe obcaecati consequuntur excepturi iusto! Deleniti, earum. Dicta error vero maxime eum itaque velit, asperiores voluptatibus veritatis magnam dignissimos accusamus sequi! Saepe sit laudantium unde numquam inventore. Possimus incidunt quam, ut vel earum aut corrupti eius voluptatibus, dolores repellendus iste quod voluptatem magni tempora amet cum nisi et sint aliquam cumque? Atque, incidunt? Natus architecto pariatur sit illo aliquid quae quaerat magni sint incidunt itaque ex, eligendi at id nam alias assumenda adipisci, odit soluta consectetur modi numquam iste! Mollitia illo accusantium quia at nesciunt laudantium porro fugit delectus incidunt quaerat?</p>"},"id":"6f186ec6-de47-4ddd-8435-6ce8ad996279","isHidden":false,"type":"text"},{"content":{"location":"web","url":"https://www.youtube.com/watch?v=C3iHAgwIYtI","video":[],"poster":[],"caption":"Space Launch","autoplay":"false","muted":"true","loop":"false","controls":"true","preload":"auto"},"id":"42c73ee4-52cd-4f3f-b274-58f60f5a8661","isHidden":false,"type":"video"},{"content":{"location":"kirby","url":"","video":["clip.mp4"],"poster":["mercury-6618698_1920.jpg"],"caption":"My Game","autoplay":"false","muted":"true","loop":"false","controls":"true","preload":"auto"},"id":"dec9a1de-3a1a-4727-9046-f412909f4e0c","isHidden":false,"type":"video"},{"content":{"code":"const code = \"Hello World\"\nif (code) {\n  console.log(code);\n}","language":"typescript"},"id":"d9c30003-362d-4765-ba51-441f10a09765","isHidden":false,"type":"code"},{"content":{"text":"### Markdown\nWith markdown you can do everything\n\n1. Write Markdown\n2. Save it and adapt\n3. Profit"},"id":"680c4a90-f501-4177-9276-78da7271682f","isHidden":false,"type":"markdown"},{"content":{"images":["star-trails-5718301_1280.jpg","landscape-9263545_1280.jpg","tent-548022_1280.jpg","nasa-q1p7bh3shj8-unsplash.jpg","nasa-yj1m5rickk4-unsplash.jpg","jeremy-perkins-uhjiu8fjnsq-unsplash.jpg"],"caption":"MyGallery","ratio":"16/9","crop":"true"},"id":"1acf07d8-9473-434c-88cf-2b3b36d51f36","isHidden":false,"type":"gallery"}]
+
+----
+
+Meta-description: Nebula space
+
+----
+
+Meta-keywords: space, stars, space launch, Astronaut
+
+----
+
+Meta-robots: index, follow
