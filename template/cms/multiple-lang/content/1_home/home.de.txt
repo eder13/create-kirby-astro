@@ -2,11 +2,11 @@ Title: Home
 
 ----
 
-Showcase-headline: Hola
+Showcase-headline: Willkommen
 
 ----
 
-Showcase-sub-headline: Hola, soy John Doe. En esta página comparto mis experiencias. ¡Visita mi blog!
+Showcase-sub-headline: Hi. Ich bin John Doe. Auf dieser Seite schreibe ich über Dinge, die ich erlebt habe. Sieh dir meinen Blog an!
 
 ----
 

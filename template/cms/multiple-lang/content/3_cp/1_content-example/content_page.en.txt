@@ -6,7 +6,7 @@ Content-page-title: EN Test
 
 ----
 
-Content-page-content: [{"content":{"text":"<p>A short text to test the site. <a href=\"http://localhost/cp/content-page-unlisted\">Here</a> is an unlisted page as an example.</p>"},"id":"7687bb51-26e2-4a8f-935a-32480d210a9c","isHidden":false,"type":"text"}]
+Content-page-content: [{"content":{"text":"<p>A short text to test the site. <a href=\"http://localhost/en/cp/content-page-unlisted\">Here</a> is an unlisted page as an example.</p>"},"id":"7687bb51-26e2-4a8f-935a-32480d210a9c","isHidden":false,"type":"text"}]
 
 ----
 

@@ -9,6 +9,12 @@ An Astro + Kirby template that builds static assets with Astro and injects them 
 
 ### TODOs
 
+bugs:
+
+- delete /cms/site/languages/lang.php
+- URLUtils -> specific code copy it
+- content of translation_keys.php -> Template replace
+
 if multiple languages are supplied, the first language specified is the default language
 
 gitignore and README create in the root of the folder - create also .env file automatically

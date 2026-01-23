@@ -1,0 +1,41 @@
+---
+import Footer from '../../components/molecules/footer/Footer.astro'
+import Navbar from '../../components/molecules/navbar/Navbar.astro';
+import TextComponent from '../../components/molecules/text-component/TextComponent.astro';
+import EnvironmentHelper from '../../helpers/EnvironmentHelper';
+import Layout from '../../layouts/Layout.astro';
+import { Page } from '../../types/pages';
+import { getSiteData } from '../../utils/DataFetchingUtils';
+import type { HomeResponse } from '../../types/responses/home';
+import Language from '../../types/language';
+import TranslationHelper from '../../helpers/TranslationHelper';
+
+const { data: json, isError } = await getSiteData<HomeResponse>(`${EnvironmentHelper.getFetchBaseURL()}${Page.HOME}/${Language.FR}`);
+
+const siteData = json ? 
+    { ...json.site.site_data, page: { value: 'Error' }  } 
+    : null;
+
+const t = await TranslationHelper.getInstance();
+
+---
+
+<Layout isFetchPageError={false} seoMeta={{ robots: "noindex, nofollow" }} siteData={siteData} setMarginNavbar={true}>
+    <main>
+        {isError ?  
+            <div class="container-md py-3">
+                <h1>Fehler 404 Nicht gefunden</h1>
+                <br />
+                <a href={`${EnvironmentHelper.getRootDomainURL()}/${Language.DE}`}>Zurück zu Home</a>
+            </div>
+        : <Navbar logo={json.site.logo} headerData={json.header} />
+            <section id={'error'}>
+                <TextComponent fontSize="bigger" dangerouslySetText={true} headline={t.getTranslation('error.page.title', Astro.url.pathname)} headlineSize="h1" text={t.getTranslation('error.page.text', Astro.url.pathname)}  />
+                <div class="d-flex justify-content-center align-items-center">
+                    <a class="btn btn-link" href={`${EnvironmentHelper.getRootDomainURL()}/${Language.DE}`}>{t.getTranslation('button.back.tohomepage.text', Astro.url.pathname)}</a>
+                </div>
+            </section>
+            <Footer {...json.site.footer} />
+        }
+    </main>
+</Layout>

@@ -50,7 +50,7 @@ const {
                                     ]}
                                     url={url}
                                     linkText={`All ${title.value}`}
-                                    onclick={onClick}
+                                    onclick={subpage.onClick}
                                 />
                             </li>
                         )}
@@ -62,7 +62,7 @@ const {
                                     "dropdown-item nav-link",
                                     subpage.active && "active",
                                 ]}
-                                onclick={onClick}
+                                onclick={subpage.onClick}
                             />
                         </li>
                     </>

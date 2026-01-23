@@ -1,4 +1,4 @@
-Title: Dissoudre les étoiles
+Title: Sciogliere le stelle
 
 ----
 
@@ -10,7 +10,7 @@ Blog-title:
 
 ----
 
-Blog-subtitle: Il n'y a pas de limites. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
+Blog-subtitle: Non ci sono limiti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
 
 ----
 

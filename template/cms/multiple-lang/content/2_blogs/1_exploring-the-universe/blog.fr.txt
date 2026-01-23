@@ -1,4 +1,4 @@
-Title: Das Universum erkunden
+Title: Explorez l'univers
 
 ----
 
@@ -10,7 +10,7 @@ Blog-title:
 
 ----
 
-Blog-subtitle: Unsere Aufgabe zum Rand des Nichts zu gelangen
+Blog-subtitle: Notre tâche est d'atteindre la limite du néant.
 
 ----
 

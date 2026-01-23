@@ -1,0 +1,119 @@
+---
+import Footer from "../../../components/molecules/footer/Footer.astro";
+import BlocksMapperComponent from "../../../components/molecules/blocks-mapper-component/BlocksMapperComponent.astro";
+import Navbar from "../../../components/molecules/navbar/Navbar.astro";
+import Container from "../../../components/structure/Container.astro";
+import TextImageComponent from "../../../components/molecules/text-image-component/TextImageComponent.astro";
+import EnvironmentHelper from "../../../helpers/EnvironmentHelper";
+import Layout from "../../../layouts/Layout.astro";
+import { Page } from "../../../types/pages";
+import type { BlogResponse } from "../../../types/responses/blog";
+import type { BlogsResponse } from "../../../types/responses/blogs";
+import { getSiteData } from "../../../utils/DataFetchingUtils";
+import Language from '../../../types/language';
+
+const ERROR_BLOGS_NOT_AVAILABLE = "blogsNotAvailable";
+
+export async function getStaticPaths() {
+    const { data, isError } = await getSiteData<BlogsResponse>(
+        `${EnvironmentHelper.getFetchBaseURL()}/${Language.DE}/${Page.BLOGS}`,
+    );
+
+    if (isError) {
+        return [
+            {
+                params: {
+                    blog: ERROR_BLOGS_NOT_AVAILABLE,
+                },
+            },
+        ];
+    }
+
+    return data.page?.blogs_fields.blogs?.map?.((blog) => {
+        return {
+            params: {
+                blog: blog.blog_slug,
+            },
+        };
+    });
+}
+
+const { blog } = Astro.params;
+
+if (blog === ERROR_BLOGS_NOT_AVAILABLE) {
+    console.warn("Blogs API not available");
+}
+
+const { data, isError } = await getSiteData<BlogResponse>(
+    `${EnvironmentHelper.getFetchBaseURL()}/${Language.DE}/${Page.BLOG.replace(":slug", blog)}`,
+);
+
+const currentFullUrl = `${EnvironmentHelper.getRootDomainURL()}/${Language.DE}/${Page.BLOG.replace(":slug", blog)}`;
+---
+
+<Layout
+    isFetchPageError={isError || blog === ERROR_BLOGS_NOT_AVAILABLE}
+    seoMeta={{
+        author: data?.site.footer.contact_name.value,
+        description: data?.page.meta_fields.meta_description.value,
+        keywords: data?.page.meta_fields.meta_keywords.value,
+        robots: data?.page.meta_fields.meta_robots.value,
+        currentFullURL: new URL(currentFullUrl),
+        country: data?.site.site_data.country?.value,
+    }}
+    setMarginNavbar={true}
+    siteData={data?.site?.site_data}
+>
+    {
+        data && (
+            <main>
+                <Navbar logo={data.site.logo} headerData={data.header} />
+                <Container>
+                    <TextImageComponent
+                        headline={data.page.blog_fields.blog_title.value ?? ""}
+                        text={data.page.blog_fields.blog_subtitle.value ?? ""}
+                        class="mb-2"
+                        image={data.page.blog_fields.blog_title_image}
+                        headlineSize="h1"
+                    />
+                    <div class="wrapper pt-5">
+                        <BlocksMapperComponent
+                            blocks={data.page.blog_fields.blog_content}
+                        />
+                    </div>
+                </Container>
+                <Footer {...data.site.footer} />
+            </main>
+        )
+    }
+</Layout>
+
+<style>
+    .wrapper {
+        padding: 0 16rem;
+    }
+
+    @media only screen and (max-width: 575px) {
+        .wrapper {
+            padding: 0 1rem;
+        }
+    }
+
+    @media only screen and (min-width: 576px) and (max-width: 768px) {
+        .wrapper {
+            padding: 0 4rem;
+        }
+    }
+
+    @media only screen and (min-width: 769px) and (max-width: 992px) {
+        .wrapper {
+            padding: 0 8rem;
+        }
+    }
+
+    @media only screen and (min-width: 993px) and (max-width: 1200px) {
+        .wrapper {
+            padding: 0 12rem;
+        }
+    }
+</style>

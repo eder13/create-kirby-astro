@@ -1,0 +1,91 @@
+---
+import Headline from "../../../components/atoms/Headline.astro";
+import BlocksMapperComponent from "../../../components/molecules/blocks-mapper-component/BlocksMapperComponent.astro";
+import Footer from "../../../components/molecules/footer/Footer.astro";
+import Navbar from "../../../components/molecules/navbar/Navbar.astro";
+import Container from "../../../components/structure/Container.astro";
+import EnvironmentHelper from "../../../helpers/EnvironmentHelper";
+import Layout from "../../../layouts/Layout.astro";
+import Language from '../../../types/language';
+import { Page } from "../../../types/pages";
+import type { ContentPageResponse } from "../../../types/responses/content";
+import type { ContentsPagesResponse } from "../../../types/responses/contents";
+import { getSiteData } from "../../../utils/DataFetchingUtils";
+
+const ERROR_CPS_NOT_AVAILABLE = "cpsNotAvailable";
+
+export async function getStaticPaths() {
+    const { data, isError } = await getSiteData<ContentsPagesResponse>(
+        `${EnvironmentHelper.getFetchBaseURL()}/${Language.EN}/${Page.CONTENT_PAGES}`,
+    );
+
+    if (isError) {
+        return [
+            {
+                params: {
+                    cp: ERROR_CPS_NOT_AVAILABLE,
+                },
+            },
+        ];
+    }
+
+    return data.page?.content_fields?.map?.((cp) => {
+        return {
+            params: {
+                cp: cp.content_slug,
+            },
+        };
+    });
+}
+
+const { cp } = Astro.params;
+
+if (cp === ERROR_CPS_NOT_AVAILABLE) {
+    console.warn("Contents API not available");
+}
+
+const { data, isError } = await getSiteData<ContentPageResponse>(
+    `${EnvironmentHelper.getFetchBaseURL()}/${Language.EN}/${Page.CONTENT_PAGE.replace(":slug", cp)}`,
+);
+
+const currentFullUrl = `${EnvironmentHelper.getRootDomainURL()}/${Language.EN}/${Page.CONTENT_PAGE.replace(":slug", cp)}`;
+---
+
+<Layout
+    isFetchPageError={isError || cp === ERROR_CPS_NOT_AVAILABLE}
+    seoMeta={{
+        author: data?.site.footer.contact_name.value,
+        description: data?.page.meta_fields.meta_description.value,
+        keywords: data?.page.meta_fields.meta_keywords.value,
+        robots: data?.page.meta_fields.meta_robots.value,
+        currentFullURL: new URL(currentFullUrl),
+        country: data?.site.site_data.country?.value,
+    }}
+    setMarginNavbar={true}
+    siteData={data?.site?.site_data}
+>
+    {
+        data && (
+            <main>
+                <Navbar logo={data.site.logo} headerData={data.header} />
+                <Container>
+                    <Headline
+                        text={
+                            data.page.content_page_fields.content_page_title
+                                .value
+                        }
+                    />
+                    <div class="wrapper pt-5">
+                        <BlocksMapperComponent
+                            blocks={
+                                data.page.content_page_fields
+                                    .content_page_content
+                            }
+                        />
+                    </div>
+                </Container>
+                <Footer {...data.site.footer} />
+            </main>
+        )
+    }
+</Layout>

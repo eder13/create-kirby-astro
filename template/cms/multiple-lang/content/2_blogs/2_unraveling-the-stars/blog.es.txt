@@ -1,4 +1,4 @@
-Title: Sciogliere le stelle
+Title: derritiendo las estrellas
 
 ----
 
@@ -10,7 +10,7 @@ Blog-title:
 
 ----
 
-Blog-subtitle: Non ci sono limiti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
+Blog-subtitle: no hay limites. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
 
 ----
 

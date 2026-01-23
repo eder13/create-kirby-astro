@@ -6,6 +6,8 @@ export const SPECIFIC_SETUP_FOLDERS_AND_FILES_BASED_ON_ARGS_TEMPLATE = {
     multipleLanguage: 'multiple-lang',
 };
 
+export const LANG_PHP_TEMPLATE_FILE = '/cms/site/languages/lang.php';
+
 export const DEFAULT_TEMPLATE_FILES_TO_COPY = [
     // Astro Files
     {

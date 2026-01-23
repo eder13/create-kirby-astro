@@ -45,11 +45,12 @@ const t = await TranslationHelper.getInstance();
         </div>
         <Dropdown
             skipHeadlineInDropdown
-            class="d-none d-lg-block"
+            class="d-lg-none"
             id="languageDropdownMobile"
             title={{ value: "Lang" }}
             url="#"
-            subpages={t.getLanguageOptions().map(language => ({
+            subpages={t.getLanguageOptions().map((language, index) => ({
+                id: `language-${index}`,
                 active: language === t.getCurrentAstroLanguage(Astro.url.pathname),
                 title: {
                     value: language.toUpperCase()
@@ -69,8 +70,9 @@ const t = await TranslationHelper.getInstance();
                 id="languageDropdownDesktop"
                 title={{ value: "Lang" }}
                 url="#"
-                subpages={t.getLanguageOptions().map(language => ({
-					active: language === t.getCurrentAstroLanguage(Astro.url.pathname),
+                subpages={t.getLanguageOptions().map((language, index) => ({
+					id: `language-${index}`,
+                    active: language === t.getCurrentAstroLanguage(Astro.url.pathname),
 					title: {
 						value: language.toUpperCase()
 					},

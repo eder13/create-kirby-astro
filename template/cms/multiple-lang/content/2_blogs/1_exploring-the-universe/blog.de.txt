@@ -1,4 +1,4 @@
-Title: Explora el universo
+Title: Das Universum erkunden
 
 ----
 
@@ -10,7 +10,7 @@ Blog-title:
 
 ----
 
-Blog-subtitle: Nuestra tarea es llegar al borde de la nada.
+Blog-subtitle: Unsere Aufgabe zum Rand des Nichts zu gelangen
 
 ----
 

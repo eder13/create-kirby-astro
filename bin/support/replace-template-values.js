@@ -82,7 +82,39 @@ export const FILES_WITH_TEMPLATE_STRINGS_TO_REPLACE = [
             return defaultLang;
         },
     },
+    {
+        fileName: 'helpers/translation_keys.php',
+        regExs: [/.*?/g],
+        getReplacement: (langs) => {
+            return `
+            <?php 
+                function getTranslationKeysObject() {
+                    ${langs.map((lang) => '$' + lang + " = include(__DIR__ . '/../languages/" + lang + ".php');").join('\n')}
 
+                    return array(
+                        ${langs.map((lang) => '"' + lang + '" => $' + lang).join(',\n')}
+                    );
+                }
+            ?>
+            `;
+        },
+    },
+    {
+        fileName: 'templates/error.php',
+        regExs: [/.*?/g],
+        getReplacement: (langs) => {
+            return `
+            <?php
+                $pathname = $_SERVER['REQUEST_URI'];
+
+                ${langs.map((lang) => 'if (' + "strpos(\$pathname, '/" + lang + "') === 0 && file_exists(__DIR__ . '/../../../" + lang + "/error/index.html')) {\n" + "    include_once(__DIR__ . '/../../../" + lang + "/error/index.html');\n" + '} else ').join('')}
+                {
+                    echo '<html><body><h1>Error</h1></body></html>';
+                }
+            ?>
+            `;
+        },
+    },
     // Kirby Files
     {
         fileName: 'site/config/config.php',

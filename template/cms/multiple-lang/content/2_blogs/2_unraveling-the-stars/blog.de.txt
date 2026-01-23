@@ -1,4 +1,4 @@
-Title: derritiendo las estrellas
+Title: Die Sterne auflösen
 
 ----
 
@@ -10,7 +10,7 @@ Blog-title:
 
 ----
 
-Blog-subtitle: no hay limites. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
+Blog-subtitle: Der Himmel ist die Grenze. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
 
 ----
 

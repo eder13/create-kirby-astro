@@ -1,0 +1,42 @@
+---
+import Navbar from "../../components/molecules/navbar/Navbar.astro";
+import Showcase from "../../components/molecules/showcase-component/Showcase.astro";
+import EnvironmentHelper from "../../helpers/EnvironmentHelper";
+import Layout from "../../layouts/Layout.astro";
+import { Page } from "../../types/pages";
+import type { HomeResponse } from "../../types/responses/home";
+import { getSiteData } from "../../utils/DataFetchingUtils";
+import Footer from "../../components/molecules/footer/Footer.astro";
+import Language from '../../types/language';
+
+const { data: json, isError } = await getSiteData<HomeResponse>(
+    `${EnvironmentHelper.getFetchBaseURL()}${Page.HOME}/${Language.DE}`,
+);
+
+const currentFullUrl = `${EnvironmentHelper.getRootDomainURL()}${Page.HOME}/${Language.DE}`;
+---
+
+<Layout
+    isFetchPageError={isError}
+    seoMeta={{
+        author: json?.site.footer.contact_name.value,
+        description: json?.page.meta_fields.meta_description.value,
+        keywords: json?.page.meta_fields.meta_keywords.value,
+        robots: json?.page.meta_fields.meta_robots.value,
+        currentFullURL: new URL(currentFullUrl),
+        country: json?.site.site_data.country?.value,
+    }}
+    setMarginNavbar={false}
+    siteData={json?.site?.site_data}
+>
+    {
+        json && (
+            <main>
+                <Navbar logo={json.site.logo} headerData={json.header} />
+                <Showcase {...json.page.showcase_fields} />
+
+                <Footer {...json.site.footer} />
+            </main>
+        )
+    }
+</Layout>

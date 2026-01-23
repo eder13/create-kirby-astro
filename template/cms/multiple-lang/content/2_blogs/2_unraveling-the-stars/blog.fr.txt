@@ -1,4 +1,4 @@
-Title: Die Sterne auflösen
+Title: Dissoudre les étoiles
 
 ----
 
@@ -10,7 +10,7 @@ Blog-title:
 
 ----
 
-Blog-subtitle: Der Himmel ist die Grenze. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
+Blog-subtitle: Il n'y a pas de limites. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, cum delectus.
 
 ----
 
