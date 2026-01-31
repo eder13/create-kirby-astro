@@ -36,3 +36,17 @@ node bin/index.js --name="myProjectName" --langs="[en, de]" --locales="[en-GB, d
 
 ## Quick Start
 
+1. Copy the content of your generated folder to your server environment (e.g. htdocs in XAMPP).
+
+2. Grant permissions: `sudo chmod -R 777 /path/to/your/htdocs`
+
+3. Go to https://localhost/cms/panel and install Kirby
+
+4. To build for Astro, click on the "Build" Button in the Kirby Panel. It requires a password which is specified in the .env file, per default it is `my-secret-password`.
+   Once the Build is done, click the "Publish" Button.
+
+5. Go to https://localhost to see the result.
+
+## Local Dev
+
+For astro you can use the dev server for HMR. Use it with `npm run dev` inside the `frontend/` folder.

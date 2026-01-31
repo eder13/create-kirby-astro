@@ -191,7 +191,7 @@ class CommonFiles {
         packageJson.scripts = {
             ...packageJson.scripts,
             astro: 'astro',
-            dev: 'DOMAIN=localhost astro dev',
+            dev: 'PORT=4321 DOMAIN=localhost astro dev',
             build: "touch deployment.lock && (astro build >> logs/$(date +'%Y-%m-%d_%H-%M-%S')_deployment.log 2>&1 || (rm -rf dist/ && touch error.build || true)) && rm -rf deployment.lock &",
         };
 
